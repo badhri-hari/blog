@@ -14,7 +14,6 @@ export default defineConfig({
     },
   },
   server: {
-    open: "/src/index.html",
     historyApiFallback: true,
   },
 });
