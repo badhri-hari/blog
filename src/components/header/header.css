@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  height: 115px;
+  margin-top: 20px;
+  border: 1px solid #ff4f00;
+}
+
+.logo-link {
+  text-decoration: none;
+}
+
+.logo-link:hover::after {
+  background: transparent;
+}
+
+.horizontal-text {
+  font-size: 3.2rem;
+  margin: 0;
+}
+
+.letter-b {
+  font-size: inherit;
+  background: linear-gradient(-135deg, white 55%, rgba(255, 81, 0, 1) 55%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.vertical-text {
+  display: block;
+  margin-left: 1px;
+  width: 1em;
+  font-size: 3rem;
+  color: #ff4f00;
+  line-height: 0;
+}
