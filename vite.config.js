@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     assetsDir: ".",
     rollupOptions: {
+      input: "/src/app.jsx",
       output: {
         dir: "dist",
       },
