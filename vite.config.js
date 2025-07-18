@@ -4,15 +4,11 @@ import preact from "@preact/preset-vite";
 export default defineConfig({
   plugins: [preact()],
   build: {
-    assetsDir: ".",
     rollupOptions: {
       input: "/src/app.jsx",
       output: {
         dir: "dist",
       },
     },
-  },
-  server: {
-    historyApiFallback: true,
   },
 });
