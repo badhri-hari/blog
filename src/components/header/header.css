@@ -16,13 +16,14 @@
 }
 
 .horizontal-text {
-  font-size: 3.2rem;
+  font-size: 3.1rem;
   margin: 0;
+  margin-top: -3px;
 }
 
 .letter-b {
   font-size: inherit;
-  background: linear-gradient(-135deg, white 55%, rgba(255, 81, 0, 1) 55%);
+  background: linear-gradient(-135deg, white 25%, rgba(255, 81, 0, 1) 25%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -1,8 +1,7 @@
 * {
   font-family: system-ui, Verdana, "Segoe UI", sans-serif;
-  color: white;
-  line-height: 1.8em;
-  font-size: 0.79rem;
+  line-height: 1.9em;
+  font-size: 0.82rem;
 }
 
 html,
@@ -20,6 +19,14 @@ body {
   display: flex;
   flex-direction: column;
   width: 720px;
+}
+
+h1,
+h2,
+p,
+div,
+a {
+  color: white;
 }
 
 a {
@@ -47,7 +54,6 @@ a:hover::after {
   width: 102%;
   background: rgba(255, 79, 0, 0.5);
   pointer-events: none;
-  z-index: 1;
 }
 
 .main-area {
@@ -60,6 +66,23 @@ a:hover::after {
   ::selection {
     background-color: rgba(255, 255, 255, 0.1);
     color: #ff4f00;
+  }
+}
+
+@media (max-width: 900px) {
+  html {
+    width: 98.5vw;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  body {
+    width: 100%;
+  }
+
+  .main-area {
+    padding-top: 0;
   }
 }
 

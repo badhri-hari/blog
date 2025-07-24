@@ -5,25 +5,17 @@ export default function Aside() {
   return (
     <aside>
       <h1>
-        <a
-          href="/about"
-          className="aside-links"
-          aria-label="Go to the About page"
-          title="Open About page"
-          style={{ cursor: "not-allowed", pointerEvents: "none" }}
-        >
+        <a href="/" className="aside-links" aria-label="Go to the Blogs page">
           By BADHRI HARI
         </a>
       </h1>
       <h2>
         <a
-          href="/"
+          href="/about"
           className="aside-links"
-          aria-label="Go to the Home page"
-          title="Open home page"
-          style={{ cursor: "not-allowed", pointerEvents: "none" }}
+          aria-label="Go to the About page"
         >
-          Home Page
+          About
         </a>
       </h2>
       <h2>
@@ -31,21 +23,21 @@ export default function Aside() {
           href="/links"
           className="aside-links"
           aria-label="Go to the Random Links page"
-          title="Open Random Links page"
-          style={{ cursor: "not-allowed", pointerEvents: "none" }}
         >
           Random Links
         </a>
       </h2>
       <h2>
         <a
-          href="/media"
+          href="/archive"
           className="aside-links"
-          aria-label="Go to the Media Archive page"
-          title="Open Media Archive page"
-          style={{ cursor: "not-allowed", pointerEvents: "none" }}
+          aria-label="Go to the Search/Archive page"
+          style={{
+            pointerEvents: "none",
+            opacity: "0.6",
+          }}
         >
-          Media Archive
+          Archive
         </a>
       </h2>
     </aside>

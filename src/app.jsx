@@ -7,10 +7,9 @@ import Aside from "./components/aside/aside";
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
 import Links from "./pages/links/links";
-import Media from "./pages/media/media";
+import Archive from "./pages/archive/archive";
 
 import "./app.css";
-import "./app-mobile.css";
 
 function App() {
   return (
@@ -20,9 +19,9 @@ function App() {
         <Aside />
         <Router>
           <Home default />
-          <About path="/about_construction" />
-          <Links path="/links_construction" />
-          <Media path="/media_construction" />
+          <About path="/about" />
+          <Links path="/links" />
+          <Archive path="/archive" />
         </Router>
       </div>
     </>

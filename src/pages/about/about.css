@@ -12,10 +12,56 @@
 }
 
 .bio {
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 
 .bio p {
   font-size: 1rem;
   margin: 0;
+}
+
+.visitor-count {
+  font-size: 0.9rem;
+  margin-top: 20px;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.socials {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin-bottom: 3rem;
+}
+
+.socials-icons {
+  font-size: 2.5rem;
+}
+
+.linkedin:hover::after,
+.github:hover::after,
+.reddit:hover::after {
+  display: none;
+}
+
+.linkedin:hover .socials-icons {
+  opacity: 0.6;
+}
+
+.github:hover .socials-icons {
+  opacity: 0.6;
+}
+
+.reddit:hover .socials-icons {
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .about-me {
+    margin-bottom: 0;
+    margin-top: 10px;
+    flex: 0.67;
+    margin-bottom: 0;
+    margin-left: -10px;
+  }
 }

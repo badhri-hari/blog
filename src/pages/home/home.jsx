@@ -2,6 +2,8 @@ import { useEffect, useState, useRef, useCallback } from "preact/hooks";
 import { createClient } from "@supabase/supabase-js";
 import DOMPurify from "dompurify";
 
+import useCachedFetch from "../../../hooks/useCachedSupabase";
+
 import "./home.css";
 import "./home-mobile.css";
 import "./blogText.css";
@@ -13,7 +15,6 @@ const supabase = createClient(
 
 function parseContentToHtml(text, isTitle = false) {
   if (!text) return "";
-
   function escapeHtml(str) {
     return str
       .replace(/&/g, "&amp;")
@@ -22,32 +23,30 @@ function parseContentToHtml(text, isTitle = false) {
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
-
   let escaped = escapeHtml(text);
-
   escaped = escaped.replace(
-    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    /\*\*(.*?)\*\*/g,
+    "<strong class='blog-text'>$1</strong>"
+  );
+  escaped = escaped.replace(/_([^_]+)_/g, "<em class='blog-text'>$1</em>");
+  escaped = escaped.replace(/__(.*?)__/g, "<u class='blog-text'>$1</u>");
+  escaped = escaped.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+(?:\([^\s)]+\))*)\)/g,
     (match, linkText, url) => {
       return `<a href="${url}" target="_blank" title="${url}">${linkText}</a>`;
     }
   );
-
   escaped = escaped.replace(
     /\*\[([^\]]+)\]/g,
     `<span class="asterisk-wrapper"><span class="asterisk-icon">*</span><span class="asterisk-popup">$1</span></span>`
   );
-
-  if (isTitle) {
-    return `<h2>${escaped}</h2>`;
-  }
-
+  if (isTitle) return `<h2>${escaped}</h2>`;
   const paragraphs = escaped
-    .split(/\n{2,}/)
+    .split("|")
     .map((para) => para.trim())
     .filter(Boolean)
-    .map((para) => `<p>${para.replace(/\n/g, " ")}</p>`)
+    .map((para) => `<p>${para}</p>`)
     .join("");
-
   return paragraphs;
 }
 
@@ -60,52 +59,90 @@ export default function Home() {
   const limit = 10;
   const offsetRef = useRef(0);
   const observerRef = useRef(null);
+  const loadingRef = useRef(false);
 
   const loadPosts = useCallback(async () => {
-    if (loading || !hasMore) return;
-
+    if (loadingRef.current || !hasMore) return;
+    loadingRef.current = true;
     setLoading(true);
+    observerRef.current?.disconnect();
     setError(null);
 
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*")
-      .order("datetime", { ascending: false })
-      .range(offsetRef.current, offsetRef.current + limit - 1);
-
-    if (error) {
-      console.error("Error loading blog posts:", error);
-      setError("You are not meant to read the texts yet...");
-    } else {
-      if (data.length < limit) {
-        setHasMore(false);
+    try {
+      const { data, error: fetchError } = await supabase
+        .from("posts")
+        .select("*")
+        .order("datetime", { ascending: false })
+        .range(offsetRef.current, offsetRef.current + limit - 1);
+      if (fetchError) {
+        console.error("Error loading blog posts:", fetchError);
+        setError("You are not meant to read the texts yet...");
+      } else {
+        if (data.length < limit) setHasMore(false);
+        setPosts((prev) => {
+          const merged = [...prev, ...data];
+          offsetRef.current += data.length;
+          try {
+            const storage =
+              typeof sessionStorage !== "undefined"
+                ? sessionStorage
+                : localStorage;
+            storage.setItem(CACHE_KEY, JSON.stringify(merged));
+            storage.setItem(CACHE_TIME_KEY, `${Date.now()}`);
+          } catch {}
+          return merged;
+        });
       }
-      setPosts((prev) => [...prev, ...data]);
-      offsetRef.current += data.length;
+    } catch (err) {
+      console.error("Unexpected fetch error:", err);
+      setError("You are not meant to read the texts yet...");
+    } finally {
+      loadingRef.current = false;
+      setLoading(false);
     }
+  }, [hasMore]);
 
-    setLoading(false);
-  }, [loading, hasMore]);
+  const { data: initialData, loading: ready } = useCachedFetch({
+    key: "cached-posts",
+    expiration: 2.5 * 60_000,
+    fetcher: async () => {
+      return await supabase
+        .from("posts")
+        .select("*")
+        .order("datetime", { ascending: false })
+        .limit(10);
+    },
+  });
 
   useEffect(() => {
+    if (!ready) return;
+    if (initialData) {
+      setPosts(initialData);
+      offsetRef.current = initialData.length;
+      setHasMore(initialData.length >= limit);
+    }
     loadPosts();
-  }, [loadPosts]);
+  }, [ready]);
 
   const lastPostRef = useCallback(
     (node) => {
-      if (loading) return;
-      if (observerRef.current) observerRef.current.disconnect();
-
+      if (loadingRef.current) return;
+      observerRef.current?.disconnect();
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           loadPosts();
         }
       });
-
       if (node) observerRef.current.observe(node);
     },
-    [loading, hasMore, loadPosts]
+    [hasMore, loadPosts]
   );
+
+  useEffect(() => () => observerRef.current?.disconnect(), []);
+
+  function getLocalDateOnly(datetime) {
+    return new Date(datetime).toLocaleDateString("en-CA");
+  }
 
   function isNonYoutubeWebsite(url) {
     const isYouTube =
@@ -120,7 +157,6 @@ export default function Home() {
       "webm",
     ];
     const extension = url.split(".").pop().toLowerCase();
-
     return (
       !isYouTube &&
       !imageOrVideoExtensions.includes(extension) &&
@@ -130,7 +166,7 @@ export default function Home() {
 
   const lastPostByDate = new Map();
   posts.forEach((post, index) => {
-    const dateOnly = post.datetime.split("T")[0];
+    const dateOnly = getLocalDateOnly(post.datetime);
     lastPostByDate.set(dateOnly, index);
   });
 
@@ -151,7 +187,6 @@ export default function Home() {
           </div>
         </article>
       )}
-
       {posts.length === 0 && !loading && !error && (
         <article>
           <div className="post-content">
@@ -159,30 +194,29 @@ export default function Home() {
           </div>
         </article>
       )}
-
       {posts.map((post, index) => {
-        const dateOnly = post.datetime.split("T")[0];
+        const dateOnly = getLocalDateOnly(post.datetime);
         const isLastPostOfDate = lastPostByDate.get(dateOnly) === index;
-
         const isLastPost = index === posts.length - 1;
-
         return (
           <article key={post.id || index} ref={isLastPost ? lastPostRef : null}>
             <header
               className="post-title"
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
-                  parseContentToHtml(post.title, true)
+                  parseContentToHtml(post.title, true),
+                  { ADD_ATTR: ["target"] }
                 ),
               }}
             />
             <div
               className="post-content"
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(parseContentToHtml(post.content)),
+                __html: DOMPurify.sanitize(parseContentToHtml(post.content), {
+                  ADD_ATTR: ["target"],
+                }),
               }}
             />
-
             {Array.isArray(post.media) && post.media.length > 0 && (
               <div
                 className="media-gallery"
@@ -205,14 +239,12 @@ export default function Home() {
                     src.includes("youtu.be/");
                   if (isYouTube) {
                     let videoId = "";
-
                     if (src.includes("youtube.com/watch?v=")) {
                       const url = new URL(src);
                       videoId = url.searchParams.get("v");
                     } else if (src.includes("youtu.be/")) {
                       videoId = src.split("youtu.be/")[1].split(/[?&]/)[0];
                     }
-
                     if (videoId) {
                       return (
                         <iframe
@@ -227,7 +259,6 @@ export default function Home() {
                       );
                     }
                   }
-
                   if (["mp4", "webm"].includes(extension)) {
                     return (
                       <video
@@ -268,7 +299,6 @@ export default function Home() {
                 })}
               </div>
             )}
-
             <time
               dateTime={post.datetime}
               title={new Date(post.datetime).toLocaleString("en-US", {
@@ -294,7 +324,6 @@ export default function Home() {
           </article>
         );
       })}
-
       {loading && (
         <article>
           <div className="post-content">

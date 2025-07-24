@@ -4,13 +4,15 @@
     padding-left: 10px;
     margin-right: 25px;
     border-right: 1px solid #ff4f00;
+    min-height: calc(100vh - 116.5px);
   }
 
   aside h1 {
-    margin-bottom: 8px;
+    margin-top: 10px;
+    margin-bottom: 9px;
   }
 
   aside h2 {
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 }

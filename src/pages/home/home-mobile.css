@@ -1,6 +1,9 @@
 @media (max-width: 900px) {
   .blog-list {
+    margin-top: 10px;
     flex: 0.67;
+    margin-bottom: 0;
+    margin-left: -10px;
   }
 
   .media-gallery {
@@ -34,5 +37,4 @@
     border-radius: 4px;
     object-fit: contain;
   }
-
 }
