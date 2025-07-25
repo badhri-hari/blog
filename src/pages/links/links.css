@@ -26,7 +26,7 @@
   margin: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .random-links {
     margin-top: 10px;
     flex: 0.67;

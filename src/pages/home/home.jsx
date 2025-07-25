@@ -113,11 +113,17 @@ export default function Home() {
 
   useEffect(() => {
     if (!ready) return;
-    if (initialData) {
+
+    if (initialData && initialData.length > 0) {
       setPosts(initialData);
       offsetRef.current = initialData.length;
       setHasMore(initialData.length >= limit);
+    } else {
+      setPosts([]);
+      offsetRef.current = 0;
+      setHasMore(true);
     }
+
     loadPosts();
   }, [ready]);
 

@@ -1,6 +1,6 @@
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   aside {
-    flex: 0.3;
+    flex: 0.25;
     padding-left: 10px;
     margin-right: 25px;
     border-right: 1px solid #ff4f00;
