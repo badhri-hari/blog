@@ -1,6 +1,7 @@
 import { useEffect } from "preact/hooks";
 import { render } from "preact";
 import { Router } from "preact-router";
+import { createClient } from "@supabase/supabase-js";
 
 import Header from "./components/header/header";
 import Aside from "./components/aside/aside";
