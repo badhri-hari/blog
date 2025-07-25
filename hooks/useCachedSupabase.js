@@ -35,7 +35,7 @@ function getCachedData(key, expiration) {
   }
 }
 
-function setCachedData(key, data) {
+export function setCachedData(key, data) {
   try {
     getStorage().setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
   } catch {}

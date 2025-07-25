@@ -2,7 +2,9 @@ import { useEffect, useState, useRef, useCallback } from "preact/hooks";
 import { createClient } from "@supabase/supabase-js";
 import DOMPurify from "dompurify";
 
-import useCachedFetch from "../../../hooks/useCachedSupabase";
+import useCachedFetch, {
+  setCachedData,
+} from "../../../hooks/useCachedSupabase";
 
 import "./home.css";
 import "./home-mobile.css";
@@ -83,12 +85,7 @@ export default function Home() {
           const merged = [...prev, ...data];
           offsetRef.current += data.length;
           try {
-            const storage =
-              typeof sessionStorage !== "undefined"
-                ? sessionStorage
-                : localStorage;
-            storage.setItem(CACHE_KEY, JSON.stringify(merged));
-            storage.setItem(CACHE_TIME_KEY, `${Date.now()}`);
+            setCachedData("cached-posts", merged);
           } catch {}
           return merged;
         });

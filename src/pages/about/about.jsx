@@ -26,10 +26,13 @@ export default function About() {
       storage =
         typeof localStorage !== "undefined" ? localStorage : sessionStorage;
     } catch {
-      storage = sessionStorage;
+      storage = {
+        getItem() {
+          return null;
+        },
+        setItem() {},
+      };
     }
-
-    const hasVisited = storage.getItem("has-visited");
 
     const cachedCount = storage.getItem(CACHE_KEY);
     const cachedTime = storage.getItem(CACHE_TIME_KEY);
@@ -37,23 +40,15 @@ export default function About() {
 
     if (cachedCount && cachedTime) {
       const age = now - parseInt(cachedTime, 10);
-      if (age < CACHE_EXPIRATION) {
-        const parsed = parseInt(cachedCount, 10);
-        if (!isNaN(parsed)) {
-          setVisitorCount(parsed);
-        }
+      const parsed = Number(cachedCount);
+      if (age < CACHE_EXPIRATION && Number.isFinite(parsed)) {
+        setVisitorCount(parsed);
+        return;
       }
     }
 
-    async function recordVisitAndFetchCount() {
+    async function fetchVisitorCount() {
       try {
-        if (!hasVisited) {
-          const { error } = await supabase.from("visits").insert({});
-          if (!error) {
-            storage.setItem("has-visited", "true");
-          }
-        }
-
         const { count, error: countError } = await supabase
           .from("visits")
           .select("*", { count: "exact", head: true });
@@ -61,6 +56,7 @@ export default function About() {
         if (!countError && typeof count === "number") {
           setVisitorCount(count);
           try {
+            const now = Date.now();
             storage.setItem(CACHE_KEY, `${count}`);
             storage.setItem(CACHE_TIME_KEY, `${now}`);
           } catch {}
@@ -80,7 +76,7 @@ export default function About() {
       }
     }
 
-    recordVisitAndFetchCount();
+    fetchVisitorCount();
   }, []);
 
   return (
