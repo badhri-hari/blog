@@ -295,7 +295,10 @@ export default function Home() {
                         className="blog-media website-link"
                         target="_blank"
                       >
-                        {src.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                        {src
+                          .replace(/^https?:\/\//, "")
+                          .replace(/^www\./, "")
+                          .replace(/\/$/, "")}
                       </a>
                     );
                   }
