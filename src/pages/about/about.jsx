@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import { FaLinkedin } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
-import { FaRedditAlien } from "react-icons/fa";
+import { FaRedditAlien, FaRss } from "react-icons/fa";
 
 import "./about.css";
 
@@ -108,6 +108,7 @@ export default function About() {
         >
           <FaLinkedin className="socials-icons" />
         </a>
+
         <a
           href="https://github.com/badhri-hari"
           target="_blank"
@@ -116,6 +117,7 @@ export default function About() {
         >
           <IoLogoGithub className="socials-icons" />
         </a>
+
         <a
           href="https://reddit.com/u/rise_sol"
           target="_blank"
@@ -123,6 +125,16 @@ export default function About() {
           className="reddit"
         >
           <FaRedditAlien className="socials-icons" />
+        </a>
+
+        <a
+          href="https://badhri.vercel.app/api/rss"
+          title="Open link to access my RSS feed page, or copy the link to add it to your RSS reader."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rss"
+        >
+          <FaRss className="socials-icons" />
         </a>
       </div>
     </main>

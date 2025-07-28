@@ -23,6 +23,14 @@
   margin-bottom: 10rem;
 }
 
+.post-content {
+  text-wrap: pretty;
+}
+
+.post-content a {
+  white-space: nowrap;
+}
+
 .media-gallery {
   display: flex;
   flex-direction: row;

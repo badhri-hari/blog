@@ -40,7 +40,8 @@
 
 .linkedin:hover::after,
 .github:hover::after,
-.reddit:hover::after {
+.reddit:hover::after,
+.rss:hover::after {
   display: none;
 }
 
@@ -53,6 +54,10 @@
 }
 
 .reddit:hover .socials-icons {
+  opacity: 0.6;
+}
+
+.rss:hover .socials-icons {
   opacity: 0.6;
 }
 

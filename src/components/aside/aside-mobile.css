@@ -1,6 +1,6 @@
 @media (max-width: 760px) {
   aside {
-    flex: 0.25;
+    flex: 0.29;
     padding-left: 10px;
     margin-right: 25px;
     border-right: 1px solid #ff4f00;
@@ -9,10 +9,10 @@
 
   aside h1 {
     margin-top: 10px;
-    margin-bottom: 9px;
+    margin-bottom: 12px;
   }
 
   aside h2 {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 }
