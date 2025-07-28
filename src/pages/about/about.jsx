@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import { FaLinkedin } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
-import { FaRedditAlien, FaRss } from "react-icons/fa";
+import { FaRedditAlien, FaRss, FaCheck } from "react-icons/fa";
 
 import "./about.css";
 
@@ -19,6 +19,7 @@ const CACHE_EXPIRATION = 2.5 * 60_000;
 export default function About() {
   const [visitorCount, setVisitorCount] = useState();
   const [error, setError] = useState();
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let storage;
@@ -79,6 +80,16 @@ export default function About() {
     fetchVisitorCount();
   }, []);
 
+  const handleCopyRss = async () => {
+    try {
+      await navigator.clipboard.writeText("https://badhri.vercel.app/api/rss");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error("Failed to copy RSS URL:", err);
+    }
+  };
+
   return (
     <main className="about-me">
       <h1>About</h1>
@@ -127,15 +138,22 @@ export default function About() {
           <FaRedditAlien className="socials-icons" />
         </a>
 
-        <a
-          href="https://badhri.vercel.app/api/rss"
-          title="Open link to access my RSS feed page, or copy the link to add it to your RSS reader."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rss"
+        <button
+          onClick={handleCopyRss}
+          className="rss-button"
+          aria-label="Copy the RSS feed link for my website to add it to your RSS reader."
         >
-          <FaRss className="socials-icons" />
-        </a>
+          <span className="asterisk-wrapper">
+            {copied ? (
+              <FaCheck color="white" className="socials-icon" size={30} />
+            ) : (
+              <FaRss color="white" className="socials-icon" size={30} />
+            )}
+            {!copied && (
+              <span className="asterisk-popup">Copy link for RSS feed</span>
+            )}
+          </span>
+        </button>
       </div>
     </main>
   );
