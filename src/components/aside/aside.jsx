@@ -5,7 +5,12 @@ export default function Aside() {
   return (
     <aside>
       <h1>
-        <a href="/" className="aside-links" aria-label="Go to the Blogs page">
+        <a
+          href="/"
+          className="aside-links"
+          title="See latest posts"
+          aria-label="Go to the Blogs page"
+        >
           By BADHRI HARI
         </a>
       </h1>
