@@ -1,0 +1,26 @@
+
+@media (max-width: 760px) {
+  .toggle-animation-btn {
+    display: none;
+  }
+
+  .static-buttons {
+    position: absolute;
+    top: unset;
+    gap: 6px;
+  }
+
+  .left-column {
+    top: 42%;
+    left: 10px;
+  }
+
+  .right-column {
+    bottom: 15%;
+    left: 10px;
+  }
+
+  .static-buttons img:hover {
+    transform: scale(1);
+  }
+}

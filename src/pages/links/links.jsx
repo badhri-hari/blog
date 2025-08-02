@@ -1,14 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
 import DOMPurify from "dompurify";
 
 import useCachedSupabase from "../../../hooks/useCachedSupabase";
+import { supabase } from "../../../utils/supabase";
 
 import "./links.css";
-
-const supabase = createClient(
-  "https://umbczydkwxjdfzhsndxm.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtYmN6eWRrd3hqZGZ6aHNuZHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4Mzk2NDgsImV4cCI6MjA2ODQxNTY0OH0.8cZIyecMqhUO5subqlZhzbWKDIaSrWLmgYewdH6h4VM"
-);
+import "./links-mobile.css";
 
 export default function Links() {
   const {
@@ -29,6 +25,24 @@ export default function Links() {
       (_, text, url) =>
         `<a href="${url}" target="_blank" title="${url}" rel="noopener noreferrer">${text}</a>`
     );
+  }
+
+  function mapLinksByCategory(linksArray) {
+    const categoryMap = {};
+
+    for (const link of linksArray) {
+      const categories = Array.isArray(link.category)
+        ? link.category
+        : ["Uncategorized"];
+
+      for (const cat of categories) {
+        const trimmedCat = cat.trim();
+        if (!categoryMap[trimmedCat]) categoryMap[trimmedCat] = [];
+        categoryMap[trimmedCat].push(link);
+      }
+    }
+
+    return categoryMap;
   }
 
   return (
@@ -56,23 +70,35 @@ export default function Links() {
       {!loading && !error && (
         <>
           <h1>Random Links</h1>
-          {links.map((link, index) => (
-            <div className="links" key={link.id || index}>
-              <h2>
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title}
-                </a>
-              </h2>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
-                    parseMarkdownLinks(link.description),
-                    { ADD_ATTR: ["target"] }
-                  ),
-                }}
-              />
-            </div>
-          ))}
+          {Object.entries(mapLinksByCategory(links)).map(
+            ([category, categoryLinks]) => (
+              <div key={category}>
+                <p className="link-category-title">{category}</p>
+                <hr className="link-hr" />
+                {categoryLinks.map((link) => (
+                  <div className="links" key={link.id}>
+                    <h2>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.title}
+                      </a>
+                    </h2>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          parseMarkdownLinks(link.description),
+                          { ADD_ATTR: ["target"] }
+                        ),
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )
+          )}
         </>
       )}
     </main>

@@ -1,56 +1,21 @@
 import { useEffect, useState, useRef, useCallback } from "preact/hooks";
-import { createClient } from "@supabase/supabase-js";
 import DOMPurify from "dompurify";
 
-import useCachedFetch, {
+import useCachedSupabase, {
   setCachedData,
 } from "../../../hooks/useCachedSupabase";
+
+import {
+  parseContentToHtml,
+  isNonYoutubeWebsite,
+  getLocalDateOnly,
+} from "../../../utils/showingPostsUtils";
+import renderMedia from "../../../utils/mediaGallery";
+import { supabase } from "../../../utils/supabase";
 
 import "./home.css";
 import "./home-mobile.css";
 import "./blogText.css";
-
-const supabase = createClient(
-  "https://umbczydkwxjdfzhsndxm.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtYmN6eWRrd3hqZGZ6aHNuZHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4Mzk2NDgsImV4cCI6MjA2ODQxNTY0OH0.8cZIyecMqhUO5subqlZhzbWKDIaSrWLmgYewdH6h4VM"
-);
-
-function parseContentToHtml(text, isTitle = false) {
-  if (!text) return "";
-  function escapeHtml(str) {
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-  let escaped = escapeHtml(text);
-  escaped = escaped.replace(
-    /\*\*(.*?)\*\*/g,
-    "<strong class='blog-text'>$1</strong>"
-  );
-  escaped = escaped.replace(/_([^_]+)_/g, "<em class='blog-text'>$1</em>");
-  escaped = escaped.replace(/__(.*?)__/g, "<u class='blog-text'>$1</u>");
-  escaped = escaped.replace(
-    /\[([^\]]+)\]\((https?:\/\/[^\s)]+(?:\([^\s)]+\))*)\)/g,
-    (match, linkText, url) => {
-      return `<a href="${url}" target="_blank" title="${url}">${linkText}</a>`;
-    }
-  );
-  escaped = escaped.replace(
-    /\*\[([^\]]+)\]/g,
-    `<span class="asterisk-wrapper"><span class="asterisk-icon">*</span><span class="asterisk-popup">$1</span></span>`
-  );
-  if (isTitle) return `<h2>${escaped}</h2>`;
-  const paragraphs = escaped
-    .split("|")
-    .map((para) => para.trim())
-    .filter(Boolean)
-    .map((para) => `<p>${para}</p>`)
-    .join("");
-  return paragraphs;
-}
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -76,9 +41,10 @@ export default function Home() {
         .select("*")
         .order("datetime", { ascending: false })
         .range(offsetRef.current, offsetRef.current + limit - 1);
+
       if (fetchError) {
         console.error("Error loading blog posts:", fetchError);
-        setError("You are not meant to read the texts yet...");
+        setError("go away, the site needs its beauty sleep");
       } else {
         if (data.length < limit) setHasMore(false);
         setPosts((prev) => {
@@ -92,22 +58,24 @@ export default function Home() {
       }
     } catch (err) {
       console.error("Unexpected fetch error:", err);
-      setError("You are not meant to read the texts yet...");
+      setError("go away, the site needs its beauty sleep");
     } finally {
       loadingRef.current = false;
       setLoading(false);
     }
   }, [hasMore]);
 
-  const { data: initialData, loading: ready } = useCachedFetch({
+  const { data: initialData, loading: ready } = useCachedSupabase({
     key: "cached-posts",
     expiration: 2.5 * 60_000,
     fetcher: async () => {
-      return await supabase
+      const result = await supabase
         .from("posts")
         .select("*")
         .order("datetime", { ascending: false })
         .limit(10);
+
+      return result;
     },
   });
 
@@ -122,9 +90,8 @@ export default function Home() {
       setPosts([]);
       offsetRef.current = 0;
       setHasMore(true);
+      loadPosts();
     }
-
-    loadPosts();
   }, [ready]);
 
   const lastPostRef = useCallback(
@@ -143,30 +110,6 @@ export default function Home() {
 
   useEffect(() => () => observerRef.current?.disconnect(), []);
 
-  function getLocalDateOnly(datetime) {
-    return new Date(datetime).toLocaleDateString("en-CA");
-  }
-
-  function isNonYoutubeWebsite(url) {
-    const isYouTube =
-      url.includes("youtube.com/watch?v=") || url.includes("youtu.be/");
-    const imageOrVideoExtensions = [
-      "jpg",
-      "jpeg",
-      "png",
-      "gif",
-      "webp",
-      "mp4",
-      "webm",
-    ];
-    const extension = url.split(".").pop().toLowerCase();
-    return (
-      !isYouTube &&
-      !imageOrVideoExtensions.includes(extension) &&
-      url.startsWith("http")
-    );
-  }
-
   const lastPostByDate = new Map();
   posts.forEach((post, index) => {
     const dateOnly = getLocalDateOnly(post.datetime);
@@ -181,7 +124,6 @@ export default function Home() {
             <p
               style={{
                 color: "red",
-                textDecoration: "underline",
                 fontSize: "1.12rem",
               }}
             >
@@ -203,15 +145,21 @@ export default function Home() {
         const isLastPost = index === posts.length - 1;
         return (
           <article key={post.id || index} ref={isLastPost ? lastPostRef : null}>
-            <header
-              className="post-title"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  parseContentToHtml(post.title, true),
-                  { ADD_ATTR: ["target"] }
-                ),
-              }}
-            />
+            <header className="post-title">
+              <a
+                href={`/post?id=${post.id}`}
+                title={`Permanent page and history for "${post.title}"`}
+              >
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      parseContentToHtml(post.title, true)
+                    ),
+                  }}
+                />
+              </a>
+            </header>
+
             <div
               className="post-content"
               dangerouslySetInnerHTML={{
@@ -220,6 +168,7 @@ export default function Home() {
                 }),
               }}
             />
+
             {Array.isArray(post.media) && post.media.length > 0 && (
               <div
                 className="media-gallery"
@@ -235,74 +184,7 @@ export default function Home() {
                     : {}
                 }
               >
-                {post.media.map((src, i) => {
-                  const extension = src.split(".").pop().toLowerCase();
-                  const isYouTube =
-                    src.includes("youtube.com/watch?v=") ||
-                    src.includes("youtu.be/");
-                  if (isYouTube) {
-                    let videoId = "";
-                    if (src.includes("youtube.com/watch?v=")) {
-                      const url = new URL(src);
-                      videoId = url.searchParams.get("v");
-                    } else if (src.includes("youtu.be/")) {
-                      videoId = src.split("youtu.be/")[1].split(/[?&]/)[0];
-                    }
-                    if (videoId) {
-                      return (
-                        <iframe
-                          key={i}
-                          className="blog-media"
-                          loading="lazy"
-                          src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-                          title={`YouTube video ${i + 1}`}
-                          allowFullScreen
-                          referrerPolicy="no-referrer"
-                        />
-                      );
-                    }
-                  }
-                  if (["mp4", "webm"].includes(extension)) {
-                    return (
-                      <video
-                        key={i}
-                        controls
-                        className="blog-media"
-                        loading="lazy"
-                        aria-label={`Video content ${i + 1}`}
-                      >
-                        <source src={src} type={`video/${extension}`} />
-                        Your browser does not support the video tag.
-                      </video>
-                    );
-                  } else if (
-                    ["jpg", "jpeg", "png", "gif", "webp"].includes(extension)
-                  ) {
-                    return (
-                      <img
-                        key={i}
-                        src={src}
-                        alt={`Blog media ${i + 1}`}
-                        className="blog-media"
-                        loading="lazy"
-                      />
-                    );
-                  } else {
-                    return (
-                      <a
-                        key={i}
-                        href={src}
-                        className="blog-media website-link"
-                        target="_blank"
-                      >
-                        {src
-                          .replace(/^https?:\/\//, "")
-                          .replace(/^www\./, "")
-                          .replace(/\/$/, "")}
-                      </a>
-                    );
-                  }
-                })}
+                {post.media.map((src, i) => renderMedia(src, i))}
               </div>
             )}
             <time

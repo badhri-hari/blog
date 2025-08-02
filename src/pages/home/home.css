@@ -1,6 +1,7 @@
 .blog-list {
   flex: 0.7;
-  margin-bottom: -2rem;
+  backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
+  --webkit-backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
 }
 
 .blog-list article header h2 {
@@ -21,6 +22,14 @@
   font-size: 0.9rem;
   margin-top: 5rem;
   margin-bottom: 10rem;
+}
+
+.post-title a {
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
 }
 
 .post-content {

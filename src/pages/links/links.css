@@ -1,6 +1,22 @@
+.link-category-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: -3px;
+  margin-bottom: -5px;
+  text-transform: uppercase;
+}
+
+.link-hr {
+  color: #ff4f00;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .random-links {
   flex: 0.7;
   margin-bottom: -2rem;
+  backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
+  --webkit-backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
 }
 
 .random-links h1 {
@@ -24,13 +40,4 @@
 .links p {
   font-size: 1rem;
   margin: 0;
-}
-
-@media (max-width: 760px) {
-  .random-links {
-    margin-top: 10px;
-    flex: 0.67;
-    margin-bottom: 0;
-    margin-left: -10px;
-  }
 }

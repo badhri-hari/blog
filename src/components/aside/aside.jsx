@@ -1,3 +1,5 @@
+import { Link } from "preact-router/match";
+
 import "./aside.css";
 import "./aside-mobile.css";
 
@@ -5,45 +7,54 @@ export default function Aside() {
   return (
     <aside>
       <h1>
-        <a
+        <Link
           href="/"
           className="aside-links"
           title="See latest posts"
           aria-label="Go to the Blogs page"
         >
           By BADHRI HARI
-        </a>
+        </Link>
       </h1>
       <h2>
-        <a
+        <Link
           href="/about"
           className="aside-links"
           aria-label="Go to the About page"
         >
           About
-        </a>
+        </Link>
       </h2>
       <h2>
-        <a
+        <Link
           href="/links"
           className="aside-links"
           aria-label="Go to the Random Links page"
         >
           Random Links
-        </a>
+        </Link>
       </h2>
       <h2>
-        <a
-          href="/archive"
+        <Link
+          href="/guestbook"
           className="aside-links"
-          aria-label="Go to the Search/Archive page"
+          aria-label="Go to the guest book page to add a public comment to my site!"
+        >
+          Guestbook
+        </Link>
+      </h2>
+      <h2>
+        <Link
+          href="/search"
+          className="aside-links"
+          aria-label="Go to the Search page"
           style={{
             pointerEvents: "none",
             opacity: "0.6",
           }}
         >
-          Archive
-        </a>
+          Search
+        </Link>
       </h2>
     </aside>
   );

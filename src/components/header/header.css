@@ -5,6 +5,8 @@
   height: 115px;
   margin-top: 20px;
   border: 1px solid #ff4f00;
+  backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
+  --webkit-backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
 }
 
 .logo-link {

@@ -1,22 +1,46 @@
 import { useEffect } from "preact/hooks";
 import { render } from "preact";
 import { Router } from "preact-router";
-import { createClient } from "@supabase/supabase-js";
 
 import Header from "./components/header/header";
 import Aside from "./components/aside/aside";
 
 import Home from "./pages/home/home";
+import Post from "./pages/post/post";
 import About from "./pages/about/about";
 import Links from "./pages/links/links";
-import Archive from "./pages/archive/archive";
+import Guestbook from "./pages/guestbook/guestbook";
+import Search from "./pages/search/search";
+import Buttons from "./components/buttons/buttons";
+
+import { supabase } from "../utils/supabase";
 
 import "./app.css";
 
-const supabase = createClient(
-  "https://umbczydkwxjdfzhsndxm.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtYmN6eWRrd3hqZGZ6aHNuZHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4Mzk2NDgsImV4cCI6MjA2ODQxNTY0OH0.8cZIyecMqhUO5subqlZhzbWKDIaSrWLmgYewdH6h4VM"
-);
+const spacing = "0.5rem";
+const style = `
+        padding: ${spacing};
+        background-color: black;
+        color: white;
+        font-weight: Bold;
+        border: ${spacing} solid #ff4f00;
+        border-radius: ${spacing};
+        font-size: 2em;
+        flex: 1;
+`;
+console.log("%c site made by badhri :)", style);
+
+const style2 = `
+padding: ${spacing};
+        background-color: black;
+        color: white;
+        font-weight: Bold;
+        border: ${spacing} solid #5865F2 ;
+        border-radius: ${spacing};
+        font-size: 2em;
+        flex: 1;
+`;
+console.log("%c discord: @baddhri", style2);
 
 function App() {
   useEffect(() => {
@@ -60,15 +84,20 @@ function App() {
   return (
     <>
       <Header />
+
       <div className="main-area">
         <Aside />
         <Router>
           <Home default />
+          <Post path="/post" />
           <About path="/about" />
           <Links path="/links" />
-          <Archive path="/archive" />
+          <Guestbook path="/guestbook" />
+          <Search path="/search" />
         </Router>
       </div>
+
+      <Buttons />
     </>
   );
 }

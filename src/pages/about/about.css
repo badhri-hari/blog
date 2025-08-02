@@ -1,6 +1,8 @@
 .about-me {
   flex: 0.7;
   margin-bottom: -2rem;
+  backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
+  --webkit-backdrop-filter: blur(5px) grayscale(0.5) brightness(0.7);
 }
 
 .about-me h1 {
@@ -18,13 +20,6 @@
 .bio p {
   font-size: 1rem;
   margin: 0;
-}
-
-.visitor-count {
-  font-size: 0.9rem;
-  margin-top: 20px;
-  opacity: 0.8;
-  margin-bottom: 1rem;
 }
 
 .socials {
@@ -69,14 +64,4 @@
 
 .rss:hover .socials-icons {
   opacity: 0.6;
-}
-
-@media (max-width: 760px) {
-  .about-me {
-    margin-bottom: 0;
-    margin-top: 10px;
-    flex: 0.67;
-    margin-bottom: 0;
-    margin-left: -10px;
-  }
 }

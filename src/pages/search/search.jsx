@@ -1,6 +1,7 @@
-import "./archive.css";
+import "./search.css";
+import "./search-mobile.css";
 
-export default function Archive() {
+export default function Search() {
   return (
     <main className="archive-main">
       <h1>

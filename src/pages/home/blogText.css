@@ -40,3 +40,9 @@
   visibility: visible;
   opacity: 1;
 }
+
+.blockquote {
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid #ff4f00;
+}
