@@ -26,7 +26,7 @@ export default function Links() {
     return text.replace(
       /\[([^\]]+)]\((https?:\/\/[^\s)]+)\)/g,
       (_, text, url) =>
-        `<a href="${url}" target="_blank" title="${url}" rel="noopener">${text}</a>`
+        `<a href="${url}" target="_blank" rel="noopener">${text}</a>`
     );
   }
 

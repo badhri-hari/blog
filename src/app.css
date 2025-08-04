@@ -35,6 +35,8 @@ a {
   font-size: inherit;
   font-weight: inherit;
   text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #ff4f00;
   text-underline-offset: 2px;
   transition: all 0.1s linear;
   cursor: pointer;
@@ -44,6 +46,7 @@ a:hover {
   text-decoration: none;
   border-bottom: none;
   position: relative;
+  color: #ff4f00;
 }
 
 a:hover::after {
@@ -51,10 +54,10 @@ a:hover::after {
   position: absolute;
   left: -1%;
   right: 0;
-  bottom: -3px;
-  height: 7px;
-  width: 102%;
-  background: rgba(255, 79, 0, 0.5);
+  bottom: 0;
+  height: 0px;
+  width: 100.5%;
+  background: white;
   pointer-events: none;
 }
 

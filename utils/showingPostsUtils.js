@@ -61,7 +61,7 @@ export function parseContentToHtml(text, isTitle = false) {
         .replace(
           /\[([^\]]+)\]\((https?:\/\/[^\s)]+(?:\([^\s)]+\))*)\)/g,
           (match, linkText, url) =>
-            `<a href="${url}" target="_blank" title="${url}">${linkText}</a>`
+            `<a href="${url}" target="_blank" rel="noopener">${linkText}</a>`
         )
         .replace(
           /\*\[([^\]]+)\]/g,

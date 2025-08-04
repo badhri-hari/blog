@@ -8,6 +8,7 @@
   font-size: 1.2rem;
   margin: 0;
   text-transform: uppercase;
+  color: white;
 }
 
 .blog-list article p {
@@ -25,10 +26,15 @@
 
 .post-title a {
   text-decoration: none;
+  text-decoration-thickness: 0;
+  transition: all 0.1s;
 }
 
 .post-title a:hover {
   text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #ff4f00;
+  text-underline-offset: 2px;
 }
 
 .post-content {
