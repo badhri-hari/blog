@@ -16,11 +16,11 @@ function shuffle(array) {
 
 export default function Buttons() {
   const containerRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 760);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1040);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 760);
+      setIsMobile(window.innerWidth < 1040);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

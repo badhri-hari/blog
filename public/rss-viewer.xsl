@@ -20,12 +20,10 @@
   </xsl:choose>
 </span>
 </a><p class="text-body pt-2 text-lg py-4"><xsl:value-of select="$description" disable-output-escaping="yes"/></p><p class="text-body text-sm" id="subscribe-links">
-  You can subscribe to this RSS feed through
+  Subscribe to this feed through any RSS reader by copy-pasting <em>https://badhri.pages.dev</em> (use 
   <a class="link intent-neutral variant-animated font-bold"
      href="https://blogtrottr.com/"
-     target="_blank" rel="noopener noreferrer">Blogtrottr</a> (use the current page's URL as the Feed URL),
-  or 
- paste this into your RSS reader of choice: <em>https://badhri.pages.dev</em>
+     target="_blank" rel="noopener noreferrer">Blogtrottr</a> if you don't want to go through the hassle of signing up for an RSS reader).
 </p>
 </header><hr class="my-6"/><section class="flex-1 space-y-6 p-1 md:p-4"><xsl:choose><xsl:when test="/rss/channel/item"><xsl:for-each select="/rss/channel/item"><article class="space-y-2"><details><summary class="max-w-full truncate"><xsl:if test="title"><h2 class="text-title inline cursor-pointer text-lg font-semibold"><xsl:value-of select="title" disable-output-escaping="yes"/></h2></xsl:if><xsl:if test="pubDate"><time class="text-caption ml-4 mt-1 block text-sm"><xsl:value-of select="pubDate"/></time></xsl:if></summary><div class="text-body px-4 py-2"><p class="my-2"><xsl:choose><xsl:when test="description"><xsl:value-of select="description" disable-output-escaping="yes"/></xsl:when></xsl:choose></p><xsl:if test="link"><a class="link variant-animated intent-neutral font-bold" href="{link}" target="_blank" rel="noopener noreferrer">
                             Open post

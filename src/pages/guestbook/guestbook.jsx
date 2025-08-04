@@ -279,7 +279,7 @@ export default function Guestbook() {
                 fontSize: "1.12rem",
               }}
             >
-              The comments feel a bit shy right now
+              The comments feel a bit shy right now, come back later.
             </p>
           </div>
         </article>

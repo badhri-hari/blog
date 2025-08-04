@@ -13,6 +13,7 @@ html {
   display: flex;
   justify-content: center;
   background-color: black;
+  overflow-x: hidden;
 }
 
 body {
@@ -71,12 +72,19 @@ a:hover::after {
   }
 }
 
+@media (max-width: 1040px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
 @media (max-width: 760px) {
   html {
     width: 100vw;
     padding: 0;
     margin: 0;
-    overflow-x: hidden;
   }
 
   body {
@@ -86,12 +94,6 @@ a:hover::after {
   .main-area {
     padding-top: 0;
     margin-bottom: 0;
-  }
-
-  input,
-  textarea,
-  select {
-    font-size: 16px !important;
   }
 }
 

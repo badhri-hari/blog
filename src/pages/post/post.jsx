@@ -100,9 +100,39 @@ export default function Post() {
             <p>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 3000);
+                  const url = window.location.href;
+
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard
+                      .writeText(url)
+                      .then(() => {
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 3000);
+                      })
+                      .catch(() => fallbackCopy(url));
+                  } else {
+                    fallbackCopy(url);
+                  }
+
+                  function fallbackCopy(text) {
+                    const textarea = document.createElement("textarea");
+                    textarea.value = text;
+                    textarea.setAttribute("readonly", "");
+                    textarea.style.position = "absolute";
+                    textarea.style.left = "-9999px";
+                    document.body.appendChild(textarea);
+                    textarea.select();
+
+                    try {
+                      document.execCommand("copy");
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 3000);
+                    } catch (err) {
+                      alert("Copy failed. Please copy the URL manually.");
+                    }
+
+                    document.body.removeChild(textarea);
+                  }
                 }}
                 style={copied ? {} : { textDecoration: "underline" }}
               >
