@@ -52,8 +52,6 @@ export default function About() {
 
         <a
           href="https://badhri.vercel.app/rss.xml"
-          target="_blank"
-          rel="noopener"
           className="rss"
           title="RSS Feed"
           aria-label="Click on this to access the RSS feed for my webpage and add to your RSS reader if you wish."

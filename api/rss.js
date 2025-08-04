@@ -99,7 +99,7 @@ export default async function handler(req, res) {
     .join("");
 
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
-  <?xml-stylesheet type="text/xsl" href="/rss-viewer.xsl"?>
+  <?xml-stylesheet type="text/xsl" href="https://badhri.vercel.app/rss-viewer.xsl"?>
   <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
       <title>Badhri's Blog</title>
@@ -111,6 +111,6 @@ export default async function handler(req, res) {
     </channel>
   </rss>`;
 
-  res.setHeader("Content-Type", "application/rss+xml");
+  res.setHeader("Content-Type", "text/xml");
   res.status(200).send(xml);
 }
