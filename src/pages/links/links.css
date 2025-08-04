@@ -4,6 +4,25 @@
   margin-top: -3px;
   margin-bottom: -5px;
   text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.link-category-title.collapsible {
+  transition: color 0.2s;
+}
+
+.link-category-title.collapsible:hover {
+  color: #ff4f00;
+}
+
+.collapsible-triangle-indicator {
+  font-size: 0.9rem;
+  margin-left: 10px;
+  line-height: 1;
 }
 
 .link-hr {

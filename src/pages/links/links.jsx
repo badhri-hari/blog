@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import DOMPurify from "dompurify";
 
 import useCachedSupabase from "../../../hooks/useCachedSupabase";
@@ -7,6 +8,8 @@ import "./links.css";
 import "./links-mobile.css";
 
 export default function Links() {
+  const [openCategories, setOpenCategories] = useState({});
+
   const {
     data: links,
     loading,
@@ -45,6 +48,13 @@ export default function Links() {
     return categoryMap;
   }
 
+  function toggleCategory(cat) {
+    setOpenCategories((prev) => ({
+      ...prev,
+      [cat]: !prev[cat],
+    }));
+  }
+
   return (
     <main className="random-links">
       {loading && (
@@ -71,33 +81,42 @@ export default function Links() {
         <>
           <h1>Random Links</h1>
           {Object.entries(mapLinksByCategory(links)).map(
-            ([category, categoryLinks]) => (
-              <div key={category}>
-                <p className="link-category-title">{category}</p>
-                <hr className="link-hr" />
-                {categoryLinks.map((link) => (
-                  <div className="links" key={link.id}>
-                    <h2>
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {link.title}
-                      </a>
-                    </h2>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(
-                          parseMarkdownLinks(link.description),
-                          { ADD_ATTR: ["target"] }
-                        ),
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )
+            ([category, categoryLinks]) => {
+              const isOpen = openCategories[category];
+              return (
+                <div key={category}>
+                  <p
+                    className="link-category-title collapsible"
+                    onClick={() => toggleCategory(category)}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    {category}{" "}
+                    <span className="collapsible-triangle-indicator">
+                      {isOpen ? "▼" : "▶"}
+                    </span>
+                  </p>
+                  <hr className="link-hr" />
+                  {isOpen &&
+                    categoryLinks.map((link) => (
+                      <div className="links" key={link.id}>
+                        <h2>
+                          <a href={link.url} target="_blank" rel="noopener">
+                            {link.title}
+                          </a>
+                        </h2>
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(
+                              parseMarkdownLinks(link.description),
+                              { ADD_ATTR: ["target"] }
+                            ),
+                          }}
+                        />
+                      </div>
+                    ))}
+                </div>
+              );
+            }
           )}
         </>
       )}
