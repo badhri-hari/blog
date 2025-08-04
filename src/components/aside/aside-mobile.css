@@ -1,0 +1,18 @@
+@media (max-width: 760px) {
+  aside {
+    flex: 0.29;
+    padding-left: 10px;
+    margin-right: 25px;
+    border-right: 1px solid #ff4f00;
+    min-height: calc(100vh - 116.5px);
+  }
+
+  aside h1 {
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
+
+  aside h2 {
+    margin-bottom: 6px;
+  }
+}

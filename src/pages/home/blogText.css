@@ -1,0 +1,48 @@
+.blog-text {
+  font-size: inherit;
+}
+
+.asterisk-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.asterisk-icon {
+  color: #ff4f00;
+  font-size: 22px;
+  margin-left: -0.05em;
+  line-height: inherit;
+}
+
+.asterisk-popup {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  max-width: 250px;
+  border: 2.5px solid #ff4f00;
+  background-color: #222;
+  color: #fff;
+  text-align: left;
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  line-height: 1.6;
+  position: absolute;
+  z-index: 1000;
+  top: -0.5rem;
+  left: 1rem;
+  white-space: normal;
+  font-size: 13px;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.asterisk-wrapper:hover .asterisk-popup {
+  visibility: visible;
+  opacity: 1;
+}
+
+.blockquote {
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid #ff4f00;
+}

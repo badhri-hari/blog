@@ -1,0 +1,13 @@
+@media (max-width: 760px) {
+  .about-me {
+    margin-bottom: 0;
+    margin-top: 10px;
+    flex: 0.67;
+    margin-bottom: 0;
+    margin-left: -10px;
+  }
+
+  .socials {
+    gap: 36px;
+  }
+}

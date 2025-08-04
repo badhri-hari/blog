@@ -1,0 +1,8 @@
+@media (max-width: 760px) {
+  .random-links {
+    margin-top: 10px;
+    flex: 0.67;
+    margin-bottom: 0;
+    margin-left: -10px;
+  }
+}
