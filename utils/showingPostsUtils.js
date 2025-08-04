@@ -22,24 +22,6 @@ export function isNonYoutubeWebsite(url) {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // parseContentToHtml function is used direclty in api/rss.js
 // so if it is updated, it should be updated there as well
 
@@ -87,7 +69,7 @@ export function parseContentToHtml(text, isTitle = false) {
         );
 
       return isBlockquote
-        ? `<p role="quote" class="blockquote">${escaped}</p>`
+        ? `<p role="blockquote" class="blockquote">${escaped}</p>`
         : `<p>${escaped}</p>`;
     })
     .join("");
