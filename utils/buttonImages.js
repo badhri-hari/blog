@@ -18,5 +18,5 @@ export const buttonImages = [
   { src: "fmhy.png", href: "https://fmhy.net" },
   { src: "datakrashbutton.png", href: "https://datakra.sh" },
   { src: "monowire.png", href: "https://monowi.re" },
-  { src: "ongezellig.png", href: "https://ongezellig.nl" },
+  { src: "ongezellig.png", href: "https://www.reddit.com/r/ongezellig/" },
 ];
