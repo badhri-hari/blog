@@ -100,6 +100,12 @@ a:hover::after {
   }
 }
 
+@media (max-width: 330px) {
+  html {
+    overflow-x: auto;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   * {
     scrollbar-color: #444 #111;

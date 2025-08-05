@@ -1,7 +1,6 @@
 export const buttonImages = [
   { src: "scp-wikidot.png", href: "https://scp-wiki.wikidot.com" },
   { src: "pokemon_pikachu.gif", href: null },
-  { src: "2025_button_user.png", href: null },
   { src: "badhri_site.gif", href: "https://badhri.pages.dev" },
   {
     src: "trump_mugshot.png",

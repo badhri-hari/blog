@@ -13,7 +13,9 @@ export default function About() {
       <h1>About</h1>
 
       <div className="bio">
-        <p>Hi, I'm Badhri.</p>
+        <p>
+          Don't take my musings too seriously.
+        </p>
       </div>
 
       <div className="socials">

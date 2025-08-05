@@ -116,6 +116,36 @@ export default function Home() {
     lastPostByDate.set(dateOnly, index);
   });
 
+  useEffect(() => {
+    const togglePopup = (e) => {
+      const popup = e.target.closest(".asterisk-popup");
+      if (popup) {
+        return;
+      }
+
+      const wrapper = e.target.closest(".asterisk-wrapper");
+
+      if (!wrapper) {
+        document.querySelectorAll(".asterisk-wrapper.active").forEach((el) => {
+          el.classList.remove("active");
+        });
+        return;
+      }
+
+      document.querySelectorAll(".asterisk-wrapper.active").forEach((el) => {
+        if (el !== wrapper) el.classList.remove("active");
+      });
+
+      wrapper.classList.toggle("active");
+    };
+
+    document.addEventListener("click", togglePopup);
+
+    return () => {
+      document.removeEventListener("click", togglePopup);
+    };
+  }, []);
+
   return (
     <main className="blog-list">
       {error && (

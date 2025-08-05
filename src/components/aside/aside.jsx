@@ -11,7 +11,7 @@ export default function Aside() {
           href="/"
           className="aside-links"
           title="See latest posts"
-          aria-label="Go to the Blogs page"
+          aria-label="Go to the Home page to see my blog posts"
         >
           By BADHRI HARI
         </Link>

@@ -9,13 +9,15 @@
   align-items: center;
   cursor: pointer;
   user-select: none;
+  opacity: 1;
 }
 
 .link-category-title.collapsible {
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
 
 .link-category-title.collapsible:hover {
+  opacity: 0.75;
   color: #ff4f00;
 }
 

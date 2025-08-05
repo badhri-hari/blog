@@ -36,7 +36,18 @@
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.asterisk-wrapper:hover .asterisk-popup {
+@media (max-width: 760px) {
+  .asterisk-popup {
+    display: none;
+    /* top: 1.5rem;
+    left: 50%;
+    transform: translateX(-30vw);
+    max-width: 70vw; */
+  }
+}
+
+.asterisk-wrapper:hover .asterisk-popup,
+.asterisk-wrapper.active .asterisk-popup {
   visibility: visible;
   opacity: 1;
 }
