@@ -14,7 +14,28 @@ export default function About() {
 
       <div className="bio">
         <p>
-          Don't take my musings too seriously.
+          I don't think I could articulate my ideals more accurately than{" "}
+          <a href="https://andymasley.com/blog" target="_blank" rel="noopener">
+            Andy Masley
+          </a> has done:
+          <ol style={{fontSize: "inherit"}}>
+            <li style={{fontSize: "inherit"}}>Value pluralism: There are multiple ways of achieving the good life, and people have a bad but natural tendency to try to impose a narrow idea of the good life on others.</li>
+            <li style={{fontSize: "inherit"}}>Small-L-liberalism: Finding ways to mediate and prevent violence between people with radically different conceptions of the good life to allow for maximum freedom.</li>
+            <li style={{fontSize: "inherit"}}>Reducing extreme suffering: In some ways this goes against the first two, but a consistent societal focus on reducing extreme suffering much more than we currently do.</li>
+            <li style={{fontSize: "inherit"}}>Valuing non-human animals: Almost all conscious beings in the world are non-human animals. Animal welfare philosophy has been much more marginalized than it ought to be.</li>
+          </ol>
+        </p>
+
+        <p>
+          Less suffering, more well-being.
+        </p>
+
+        <p>
+          I write about random topics, mainly in the field of politics, the economy,{" "}
+          <a href="https://www.strongtowns.org/" target="_blank" rel="noopener">
+            urbanism
+          </a>
+          , and technology.
         </p>
       </div>
 
@@ -54,6 +75,8 @@ export default function About() {
 
         <a
           href="https://badhri.vercel.app/rss.xml"
+          target="_blank"
+          rel="noopener"
           className="rss"
           title="RSS Feed"
           aria-label="Click on this to access the RSS feed for my webpage and add to your RSS reader if you wish."

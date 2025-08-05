@@ -241,7 +241,7 @@ export default function Guestbook() {
           type="text"
           value={nameInput}
           onInput={(e) => setNameInput(e.target.value)}
-          placeholder="Name"
+          placeholder="Name (optional)"
           maxLength={30}
           className="name-input"
         />
@@ -250,7 +250,7 @@ export default function Guestbook() {
           type="email"
           value={emailInput}
           onInput={(e) => setEmailInput(e.target.value)}
-          placeholder="Email"
+          placeholder="Email (optional, not shown publicly)"
           maxLength={50}
           className="name-input"
         />
@@ -258,7 +258,7 @@ export default function Guestbook() {
         <textarea
           value={commentInput}
           onInput={(e) => setCommentInput(e.target.value)}
-          placeholder="Add comment (required)"
+          placeholder="Comment (required)"
           maxLength={500}
           rows={1}
           className="comment-input"
