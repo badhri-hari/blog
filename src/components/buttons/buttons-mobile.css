@@ -72,7 +72,7 @@
     }
   }
 
-  @media (max-width: 340px) {
+  @media (max-width: 365px) {
     .left-column {
       display: none;
     }

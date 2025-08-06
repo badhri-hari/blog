@@ -27,7 +27,7 @@ export default function About() {
         </p>
 
         <p>
-          Less suffering, more well-being.
+          Less suffering, more well-being <em style={{fontSize: "inherit"}}>(generally)</em>.
         </p>
 
         <p>

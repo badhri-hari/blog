@@ -4,4 +4,10 @@
     border-bottom: 1px solid #ff4f00;
     margin: 0;
   }
+
+  @media (max-height: 300px) {
+    .header {
+      display: none;
+    }
+  }
 }

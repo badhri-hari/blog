@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "preact/hooks";
+import { FaRegComment } from "react-icons/fa";
 import DOMPurify from "dompurify";
 
 import useCachedSupabase, {
@@ -217,28 +218,44 @@ export default function Home() {
                 {post.media.map((src, i) => renderMedia(src, i))}
               </div>
             )}
-            <time
-              dateTime={post.datetime}
-              title={new Date(post.datetime).toLocaleString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true,
-                timeZoneName: "short",
-              })}
-            >
-              {isLastPostOfDate &&
-                new Date(post.datetime).toLocaleString("en-US", {
+
+            <div className="post-bottom-row">
+              <time
+                dateTime={post.datetime}
+                title={new Date(post.datetime).toLocaleString("en-US", {
                   weekday: "long",
-                  day: "2-digit",
-                  month: "long",
                   year: "numeric",
+                  month: "long",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: true,
+                  timeZoneName: "short",
                 })}
-            </time>
+              >
+                {isLastPostOfDate &&
+                  new Date(post.datetime).toLocaleString("en-US", {
+                    weekday: "long",
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+              </time>
+
+              <div>
+                <a
+                  href={`/comments?id=${post.id}`}
+                  className={`comment-icon ${
+                    !isLastPostOfDate && "new-position"
+                  }`}
+                  title={`View comments for "${post.title}"`}
+                  aria-label={`Open comments page for the post titled "${post.title}"`}
+                >
+                  <FaRegComment size="20" />
+                </a>
+              </div>
+            </div>
           </article>
         );
       })}

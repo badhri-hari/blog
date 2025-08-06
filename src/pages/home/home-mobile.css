@@ -10,6 +10,11 @@
     white-space: unset;
   }
 
+  .new-position {
+    margin-top: 2rem !important;
+    right: 90% !important;
+  }
+
   .media-gallery {
     display: flex;
     flex-direction: row;

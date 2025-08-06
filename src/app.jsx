@@ -7,6 +7,7 @@ import Aside from "./components/aside/aside";
 
 import Home from "./pages/home/home";
 import Post from "./pages/post/post";
+import Comments from "./pages/comments/comments"
 import About from "./pages/about/about";
 import Links from "./pages/links/links";
 import Guestbook from "./pages/guestbook/guestbook";
@@ -28,7 +29,7 @@ const style = `
         font-size: 2em;
         flex: 1;
 `;
-console.log("%c site made by badhri :)", style);
+console.log("%c hi there :)", style);
 
 const style2 = `
 padding: ${spacing};
@@ -90,6 +91,7 @@ function App() {
         <Router>
           <Home default />
           <Post path="/post" />
+          <Comments path="/comments" />
           <About path="/about" />
           <Links path="/links" />
           <Guestbook path="/guestbook" />

@@ -25,18 +25,15 @@ function escapeXml(str) {
 function parseContentToHtml(text, isTitle = false) {
   if (!text) return "";
 
-  function escapeHtml(str) {
-    return str
+  const escapeHtml = (str) =>
+    str
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
-  }
 
-  if (isTitle) {
-    return `<h2>${escapeHtml(text)}</h2>`;
-  }
+  if (isTitle) return `<h2>${escapeHtml(text)}</h2>`;
 
   const paragraphs = text
     .split(/\n+/)
@@ -83,15 +80,22 @@ export default async function handler(req, res) {
 
   if (error) return res.status(500).send("Failed to load posts");
 
+  const now = new Date().toUTCString();
+
   const items = posts
     .map((post) => {
       const htmlDescription = parseContentToHtml(post.content);
+      const link = `https://badhri.pages.dev/post?id=${post.id}`;
+      const commentLink = `https://badhri.pages.dev/comment?id=${post.id}`;
+
       return `
   <item>
     <title>${escapeXml(post.title)}</title>
-    <link>https://badhri.pages.dev/post?id=${post.id}</link>
-    <guid>https://badhri.pages.dev/post?id=${post.id}</guid>
+    <link>${link}</link>
+    <guid isPermaLink="true">${link}</guid>
+    <comments>${commentLink}</comments>
     <pubDate>${new Date(post.datetime).toUTCString()}</pubDate>
+    <dc:creator><![CDATA[Badhri Hari]]></dc:creator>
     <description><![CDATA[${htmlDescription}]]></description>
     <content:encoded><![CDATA[${htmlDescription}]]></content:encoded>
   </item>`;
@@ -99,17 +103,21 @@ export default async function handler(req, res) {
     .join("");
 
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
-  <?xml-stylesheet type="text/xsl" href="https://badhri.vercel.app/rss-viewer.xsl"?>
-  <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-    <channel>
-      <title>Badhri's Blog</title>
-      <author>Badhri Hari</author>
-      <link>https://badhri.pages.dev</link>
-      <description>Latest blog posts from my site.</description>
-      <language>en-us</language>
-      ${items}
-    </channel>
-  </rss>`;
+<?xml-stylesheet type="text/xsl" href="https://badhri.vercel.app/rss-viewer.xsl"?>
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+  <channel>
+    <title>Badhri's Blog</title>
+    <link>https://badhri.pages.dev</link>
+    <description>Latest blog posts from Badhri Hari</description>
+    <language>en-us</language>
+    <lastBuildDate>${now}</lastBuildDate>
+    <ttl>60</ttl>
+    ${items}
+  </channel>
+</rss>`;
 
   res.setHeader("Content-Type", "text/xml");
   res.status(200).send(xml);
