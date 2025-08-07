@@ -107,6 +107,17 @@
           color: #ff4f00;
           text-decoration: none;
         }
+
+        @media (max-width: 900px) {
+      html {
+        padding: 4rem 1rem;
+        padding-top: 30%;
+      }
+
+      .no-js-warning h1 {
+        font-size: 1.25rem;
+      }
+    }
       </style>
     </noscript>
   </head>
@@ -124,7 +135,7 @@
           This site requires JavaScript to function since it's made using
           <a href="https://preactjs.com/" target="_blank" rel="noopener"
             >Preact</a
-          >. Please enable it to view my blog.  Otherwise, you can subscribe to the
+          >. Please enable it to view my blog. Otherwise, you can use my
           <a
             href="https://badhri.vercel.app/rss.xml"
             target="_blank"
@@ -132,20 +143,29 @@
             aria-label="RSS feed link to Badhri's Blog"
             >RSS Feed</a
           >
-          to get the latest posts.
+          link to get the latest posts.
         </p>
 
         <p>
           <strong>Privacy details:</strong> IP address automatically collected
-          when visiting the site, only used for tracking visitor counts and
-          details, you may delete your data from the database be emailing me
+          when visiting the site and is only used for tracking visitor count
+          and other details such as user agent, location, referrer etc. No data
+          will be sold to third parties nor will this data be used for any other
+          purpose. You may delete your data from the database after visiting the
+          site by
           <a
             href="MAILTO:badhrihari123@gmail.com"
             target="_blank"
-            rel="noopener"
-            >here</a
+            rel="noopener" 
+            >emailing me</a
           >.
         </p>
+
+        <p><em>(create a <a 
+           href="https://github.com/badhri-hari/blog/issues/new"
+            target="_blank"
+            rel="noopener"
+          >new issue</a> if you want to see a no-JS version of my site)</em></p>
       </div>
     </noscript>
 
