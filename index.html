@@ -15,7 +15,6 @@
     <title>Badhri's Blog</title>
 
     <meta name="author" content="Badhri Narayanan Hari" />
-
     <meta name="description" content="" />
 
     <meta property="og:title" content="Badhri's Blog" />
@@ -72,9 +71,84 @@
     </script>
 
     <script defer src="/_vercel/insights/script.js"></script>
+
+    <noscript>
+      <style>
+        #root {
+          display: none !important;
+        }
+
+        html {
+          background-color: #000;
+          text-align: center;
+          padding: 10rem;
+          padding-top: 28%;
+        }
+
+        .no-js-warning {
+          color: #fff;
+          font-family: system-ui, sans-serif;
+        }
+
+        .no-js-warning h1 {
+          color: #ff4f00;
+          font-size: 1.75rem;
+        }
+
+        .no-js-warning a {
+          color: #fff;
+          text-decoration: underline;
+          text-decoration-color: #ff4f00;
+          transition: all 0.2s;
+        }
+
+        .no-js-warning a:hover,
+        .no-js-warning a:focus {
+          color: #ff4f00;
+          text-decoration: none;
+        }
+      </style>
+    </noscript>
   </head>
 
   <body>
+    <noscript>
+      <div
+        class="no-js-warning"
+        role="alert"
+        aria-label="JavaScript required warning"
+      >
+        <h1>got JS?</h1>
+
+        <p>
+          This site requires JavaScript to function since it's made using
+          <a href="https://preactjs.com/" target="_blank" rel="noopener"
+            >Preact</a
+          >. Please enable it to view my blog.  Otherwise, you can subscribe to the
+          <a
+            href="https://badhri.vercel.app/rss.xml"
+            target="_blank"
+            rel="noopener"
+            aria-label="RSS feed link to Badhri's Blog"
+            >RSS Feed</a
+          >
+          to get the latest posts.
+        </p>
+
+        <p>
+          <strong>Privacy details:</strong> IP address automatically collected
+          when visiting the site, only used for tracking visitor counts and
+          details, you may delete your data from the database be emailing me
+          <a
+            href="MAILTO:badhrihari123@gmail.com"
+            target="_blank"
+            rel="noopener"
+            >here</a
+          >.
+        </p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/app.jsx"></script>
   </body>
