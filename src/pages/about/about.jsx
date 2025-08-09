@@ -31,11 +31,8 @@ export default function About() {
         </p>
 
         <p>
-          I write about random topics, mainly in the field of politics, the economy,{" "}
-          <a href="https://www.strongtowns.org/" target="_blank" rel="noopener">
-            urbanism
-          </a>
-          , and technology.
+          I write about random topics, mainly politics, the economy,
+          urbanism, and technology.
         </p>
       </div>
 
