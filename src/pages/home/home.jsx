@@ -246,9 +246,7 @@ export default function Home() {
               <div>
                 <a
                   href={`/comments?id=${post.id}`}
-                  className={`comment-icon ${
-                    !isLastPostOfDate && "new-position"
-                  }`}
+                  className="comment-icon"
                   title={`View comments for "${post.title}"`}
                   aria-label={`Open comments page for the post titled "${post.title}"`}
                 >

@@ -90,7 +90,7 @@
 
         .no-js-warning h1 {
           color: #ff4f00;
-          font-size: 1.75rem;
+          font-size: 1.8rem;
         }
 
         .no-js-warning a {
@@ -106,16 +106,27 @@
           text-decoration: none;
         }
 
-        @media (max-width: 900px) {
-      html {
-        padding: 4rem 1rem;
-        padding-top: 30%;
-      }
+        @media (min-width: 901px) {
+          ::selection {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ff4f00;
+          }
 
-      .no-js-warning h1 {
-        font-size: 1.25rem;
-      }
-    }
+          .no-js-warning h1::selection {
+            color: #fff;
+          }
+        }
+
+        @media (max-width: 900px) {
+          html {
+            padding: 4rem 1rem;
+            padding-top: 30%;
+          }
+
+          .no-js-warning h1 {
+            font-size: 1.35rem;
+          }
+        }
       </style>
     </noscript>
   </head>
@@ -133,15 +144,15 @@
           This site requires JavaScript to function since it's made using
           <a href="https://preactjs.com/" target="_blank" rel="noopener"
             >Preact</a
-          >. Please enable it to view my blog. Otherwise, you can use my
+          >. Please enable it to view my blog. Otherwise, you can copy my
           <a
             href="https://badhri.vercel.app/rss.xml"
             target="_blank"
             rel="noopener"
             aria-label="RSS feed link to Badhri's Blog"
-            >RSS Feed</a
+            >RSS Feed link</a
           >
-          link to get the latest posts.
+          into your RSS reader to get the latest posts.
         </p>
 
         <p>
@@ -163,7 +174,7 @@
            href="https://github.com/badhri-hari/blog/issues/new"
             target="_blank"
             rel="noopener"
-          >new issue</a> if you want to see a no-JS version of my site)</em></p>
+          >new issue</a> if you want to make me create a no-JS version of my site)</em></p>
       </div>
     </noscript>
 

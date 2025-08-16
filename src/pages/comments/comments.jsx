@@ -4,6 +4,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { supabase } from "../../../utils/supabase";
 import useCachedSupabase from "../../../hooks/useCachedSupabase";
 
+import "./comments.css"
 import "../home/home.css";
 import "../home/home-mobile.css";
 import "../home/blogText.css";
@@ -195,11 +196,13 @@ export default function Comments() {
 
   return (
     <main className="blog-list">
-      <p
-        className="post-page-title guestbook-title"
-        style={{ marginBottom: "0.95rem", cursor: "auto" }}
-      >
-        Comments for "{postTitle}"
+      <p className="comments-page-title post-page-title guestbook-title">
+        <a
+          href={`/post?id=${postId}`}
+          title={`Permanent page and history for "${postTitle}"`}
+        >
+          Comments for "{postTitle}"
+        </a>
       </p>
 
       <form

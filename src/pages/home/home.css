@@ -39,13 +39,6 @@
   margin-right: 5px;
 }
 
-.new-position {
-  position: absolute !important;
-  margin-top: 2.5rem !important;
-  margin-right: 0 !important;
-  right: 95% !important;
-}
-
 .post-title a {
   text-decoration: none;
   text-decoration-thickness: 0;
