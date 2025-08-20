@@ -9,7 +9,7 @@ import Post from "./pages/post/post";
 import Comments from "./pages/comments/comments";
 import About from "./pages/about/about";
 import Links from "./pages/links/links";
-import Guestbook from "./pages/guestbook/guestbook";
+import Chat from "./pages/chat/chat";
 import Search from "./pages/search/search";
 import Buttons from "./components/buttons/buttons";
 
@@ -26,19 +26,7 @@ const style = `
   font-size: 2em;
   flex: 1;
 `;
-console.log("%c hi there :)", style);
-
-const style2 = `
-  padding: ${spacing};
-  background-color: black;
-  color: white;
-  font-weight: Bold;
-  border: ${spacing} solid #5865F2 ;
-  border-radius: ${spacing};
-  font-size: 2em;
-  flex: 1;
-`;
-console.log("%c discord: @baddhri", style2);
+console.log("%c hi there :) watchu doing?", style);
 
 function App() {
   function handleRoute(e) {
@@ -60,7 +48,7 @@ function App() {
           <Comments path="/comments" />
           <About path="/about" />
           <Links path="/links" />
-          <Guestbook path="/guestbook" />
+          <Chat path="/chat" />
           <Search path="/search" />
         </Router>
       </div>

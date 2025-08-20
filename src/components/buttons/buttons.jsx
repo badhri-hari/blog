@@ -125,16 +125,17 @@ export default function Buttons() {
           className="buttons-background"
           ref={containerRef}
           aria-disabled
-          aria-label="A collection of NeoCities like buttons."
+          aria-label="A collection of small, clickable images/GIFs that show my interests, personality et cetera. When clicked, many of them open to relevant/co-responding websites. All of them are displayed in 88 into 31 pixels in dimension, hence they are known as 88 x 31 buttons."
         >
-          {shuffledButtons.map(({ src, href }) =>
+          {shuffledButtons.map(({ src, href, label }) =>
             href ? (
               <a key={src} href={href} target="_blank" rel="noopener">
                 <img
                   className="bouncing-img"
                   src={`/buttons/${src}`}
-                  alt=""
-                  aria-hidden
+                  alt={label}
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             ) : (
@@ -142,34 +143,57 @@ export default function Buttons() {
                 key={src}
                 className="bouncing-img"
                 src={`/buttons/${src}`}
-                alt=""
-                aria-hidden
+                alt={label}
+                loading="lazy"
+                decoding="async"
               />
             )
           )}
         </div>
       ) : (
         <>
-          <div className="static-buttons left-column" aria-disabled>
-            {leftButtons.map(({ src, href }) =>
+          <div className="static-buttons left-column">
+            {leftButtons.map(({ src, href, label }) =>
               href ? (
                 <a key={src} href={href} rel="noopener" target="_blank">
-                  <img src={`/buttons/${src}`} alt="" />
+                  <img
+                    src={`/buttons/${src}`}
+                    loading="lazy"
+                    decoding="async"
+                    alt={label}
+                  />
                 </a>
               ) : (
-                <img key={src} src={`/buttons/${src}`} alt="" />
+                <img
+                  key={src}
+                  src={`/buttons/${src}`}
+                  loading="lazy"
+                  decoding="async"
+                  alt={label}
+                />
               )
             )}
           </div>
           {!isMobile && (
-            <div className="static-buttons right-column" aria-disabled>
-              {rightButtons.map(({ src, href }) =>
+            <div className="static-buttons right-column">
+              {rightButtons.map(({ src, href, label }) =>
                 href ? (
                   <a key={src} href={href} rel="noopener" target="_blank">
-                    <img src={`/buttons/${src}`} alt="" />
+                    <img
+                      src={`/buttons/${src}`}
+                      loading="lazy"
+                      decoding="async"
+                      alt={label}
+                    />
                   </a>
                 ) : (
-                  <img key={src} src={`/buttons/${src}`} alt="" />
+                  <img
+                    key={src}
+                    src={`/buttons/${src}`}
+                    loading="lazy"
+                    decoding="async"
+                    alt={label}
+                  />
                 )
               )}
             </div>

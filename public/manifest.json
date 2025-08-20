@@ -1,7 +1,7 @@
 {
   "name": "Badhri's Blog",
   "short_name": "Badhri's Blog",
-  "description": "Get notifications about new posts (in development).",
+  "description": "Get notifications about new posts and more (in development).",
   "version": "1.0.0",
   "start_url": ".",
   "id": "/",

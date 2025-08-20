@@ -4,7 +4,7 @@ import "./header-mobile.css";
 export default function Header() {
   return (
     <header className="header" aria-hidden>
-      <a href="/" className="logo-link">
+      <a href="/" className="logo-link" aria-hidden>
         <h1 className="horizontal-text">
           <span className="letter-b">b</span>adhri's{" "}
           <span className="vertical-text">log</span>

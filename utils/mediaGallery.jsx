@@ -1,3 +1,43 @@
+import { useState } from "preact/hooks";
+
+function YouTubeEmbed({ videoId, i }) {
+  const [active, setActive] = useState(false);
+
+  if (active) {
+    return (
+      <iframe
+        key={i}
+        className="blog-media"
+        loading="lazy"
+        src={`https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1`}
+        title={`YouTube video ${i + 1}`}
+        allowFullScreen
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+
+  const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+  return (
+    <div
+      key={i}
+      className="youtube-placeholder blog-media"
+      onClick={() => setActive(true)}
+    >
+      <img
+        src={thumbnail}
+        alt={`YouTube video ${i + 1}`}
+        title={`Video ID: ${videoId}`}
+        loading="lazy"
+      />
+      <div title={`Video ID: ${videoId}`}>
+        ▶ <span>Play YouTube Video</span>
+      </div>
+    </div>
+  );
+}
+
 export default function renderMedia(src, i) {
   const extension = src.split(".").pop().toLowerCase();
   const isYouTube =
@@ -11,17 +51,7 @@ export default function renderMedia(src, i) {
     } else {
       videoId = src.split("youtu.be/")[1].split(/[?&]/)[0];
     }
-    return (
-      <iframe
-        key={i}
-        className="blog-media"
-        loading="lazy"
-        src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-        title={`YouTube video ${i + 1}`}
-        allowFullScreen
-        referrerPolicy="no-referrer"
-      />
-    );
+    return <YouTubeEmbed key={i} videoId={videoId} i={i} />;
   }
 
   if (["mp4", "webm"].includes(extension)) {

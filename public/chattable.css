@@ -1,0 +1,306 @@
+:root {
+  --notification-sfx: "/chattable.mp3";
+}
+
+#top_banner {
+  background: transparent;
+}
+
+#background {
+  scrollbar-color: #ff4f00 transparent;
+  height: calc(95% - 50px) !important;
+}
+
+.senderInfo {
+  margin-bottom: 4px !important;
+}
+.senderInfo:has(.mod, .owner, .beta):after {
+ content: " ";
+ height: 10pt;
+ width: 10pt;
+ background: transparent;
+ border-radius: 50%;
+ background-image: url(/media/verified.png);
+ background-size: 100% 100%;
+ margin-left: 5px;
+ filter: invert(100%) drop-shadow(0 0 2px #000);
+}
+
+#scrollToBottom {
+  background: #aaaaaa89 !important;
+  backdrop-filter: blur(5px);
+  padding: 9px 15px !important;
+  font-weight: 600;
+  font-size: 11pt;
+  margin-right: 30% !important;
+  color: black !important;
+  transition: all 0.1s linear;
+}
+#scrollToBottom:hover {
+  background: #ff4f00 !important;
+  color: white !important;
+}
+
+.msgWrapper {
+   display: flex;
+   flex-wrap: wrap;
+   width: 100%;
+   align-items: center;
+}
+.msgWrapper:has(.received) {
+   justify-content: flex-start;
+}
+.msgWrapper:has(.sent) {
+   justify-content: flex-end;
+}
+
+.allMessages {
+   font-size: 10pt;
+   margin: 5px;
+   margin-top: 7px;
+   display: inline-block;
+   position: relative;
+   min-width: 25vw;
+   max-width: 80vw;
+   backdrop-filter: blur(7px); 
+   -webkit-backdrop-filter: blur(7px);
+}
+.allMessages:before {
+  content: attr(time);
+  position: static;
+  float: right;
+  margin-left: 10px;
+  font-size: 8pt;
+}
+.allMessages.containsOnlyEmojis .emoji {
+    height: 50px;
+}
+.allMessages.pm {
+  padding-top: 26px;
+}
+.allMessages.pm:before {
+  content: "[Private Message]";
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 16px;
+  padding: 5px;
+  width: calc(100% - 10px);
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 8pt;
+  font-weight: bold;
+  color: #ff4f00;
+}
+
+.sent {
+  border-radius: 20px 20px 0 20px;
+  background-color: rgba(255, 81, 0, 0.25);
+  padding: 10px 15px 10px 15px;
+  margin-right: 8px;
+  color: white;
+}
+
+.recieved {
+  border-radius: 20px 20px 20px 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 12px 10px 18px;
+  margin-left: 7px;
+  color: white;
+}
+
+#textInput {
+  height: 50px !important;
+}
+
+#input {
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  height: 100% !important;
+}
+
+#input:empty::before {
+  content: "Enter to send, supports markdown, right click to edit/delete messages or reply [click on gear icon in top right to set your name]" !important;
+  color: rgb(184, 184, 184);
+}
+
+#input, #nameEntry {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  backdrop-filter: blur(7px); 
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.badge {
+  display: none;
+}
+/* .owner {
+  background-color: transparent;
+  background-image: url('/favicon.png');
+  background-size: 100% 100%;
+  border-radius: 0;
+}
+.mod {
+  background-color: transparent;
+  background-image: url('/favicon.png');
+  background-size: 100% 100%;
+  border-radius: 0;
+} */
+
+#loadMore {
+  color: #ff4f00;
+  font-size: 10pt;
+}
+#loadMore:hover {
+  font-size: 12pt;
+}
+
+#settings {
+  filter: invert(100%) drop-shadow(0 0 2px #000);
+}
+
+#settingsWrapper {
+  background-color: #ff4f00;
+}
+
+#replyBanner {
+  color: white !important;
+  background-color: #333;
+}
+
+.ctxMenuOption {
+  background-color: transparent !important;
+  color: white !important;
+}
+.ctxMenuOption:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  text-decoration: underline !important;
+}
+#ctxMenu {
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.msgBody a {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #ff4f00;
+  text-underline-offset: 2px;
+  transition: all 0.1s linear;
+}
+.msgBody a:hover {
+  text-decoration: none;
+  border-bottom: none;
+  position: relative;
+  color: #ff4f00 !important;
+}
+
+#emojiTrayToggle {
+  filter: invert(1);
+}
+#emojiTray {
+  background-color: rgba(255, 79, 0, 0.4);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+#settingsMenu {
+  color: white !important;
+}
+#settingsMenu hr {
+  height: 1.5px;
+  width: 100%;
+  border: none;
+  background-color: white;
+  margin: auto;
+}
+#settingsMenu input[type=text] {
+  border: none;
+  outline: none !important;
+  border-bottom: solid 1px #ff4f00;
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 3px;
+  font-size: 16px !important;
+}
+
+#account {
+  filter: invert(1) !important;
+}
+
+#dltranscript a {
+  color: white !important;
+}
+
+#save {
+  border: solid 1px #ff4f00;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff4f00;
+  padding: 10px;
+  font-size: 12pt;
+  backdrop-filter: blur(10px);
+  border-radius: 3px;
+  transition: all 0.1s linear;
+}
+#save:hover {
+  background-color: #ff4f00;
+  color: white;
+}
+
+#closeSettingsBtn {
+  color: white !important;
+}
+
+#is_typing {
+  background-color: transparent;
+  height: 15px;
+  border: solid 1px #ff4f00;
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
+}
+#is_typing > span {
+  background-color: #ff4f00;
+}
+
+.pinned {
+ position: sticky;
+ top: 0;
+ 
+ z-index: 2;
+ border-radius: 5px;
+ overflow: hidden;
+ cursor: default;
+}
+.pinned:before {
+    all: unset !important;
+}
+.pinned > .allMessages {
+    box-shadow: 0 0 3px #000;
+    width: 100%;
+    margin-top: 7px;
+}
+.pinned > .allMessages::after {
+    display: none;
+}
+.pinned:after {
+ display: inline-block;
+ position: absolute;
+ right: 2px;
+ top: 2px;
+ content: "📌";
+}
+
+::selection {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: #ff4f00 !important;
+}
+a:hover::selection {
+  color: white !important;
+}

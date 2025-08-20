@@ -114,3 +114,51 @@
   margin-top: -50px !important;
   margin-bottom: 70px !important;
 }
+
+.chattable-iframe {
+  width: 100%;
+  min-height: 70vh;
+  background-color: rgba(35,35, 35, 1);
+}
+
+@media (max-height: 730px) {
+  .chattable-iframe {
+    min-height: 450px;
+  }
+}
+
+@media (max-height: 685px) {
+  .chattable-iframe {
+    min-height: 375px;
+  }
+}
+
+@media (max-height: 610px) {
+  .chattable-iframe {
+    min-height: 325px;
+  }
+}
+
+@media (max-height: 560px) {
+  .chattable-iframe {
+    min-height: 275px;
+  }
+}
+
+@media (max-height: 510px) {
+  .chattable-iframe {
+    min-height: 225px;
+  }
+}
+
+@media (max-height: 455px) {
+  .chattable-iframe {
+    min-height: 175px;
+  }
+}
+
+@media (max-height: 400px) {
+  .chattable-iframe {
+    min-height: 150px;
+  }
+}

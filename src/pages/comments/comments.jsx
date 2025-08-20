@@ -9,7 +9,7 @@ import "../home/home.css";
 import "../home/home-mobile.css";
 import "../home/blogText.css";
 import "../post/post.css";
-import "../guestbook/guestbook.css";
+import "../chat/chat.css";
 
 function getSessionId() {
   try {

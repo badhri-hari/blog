@@ -13,7 +13,8 @@ export default function Aside() {
           title="See latest posts"
           aria-label="Go to the Home page to see my blog posts"
         >
-          By BADHRI HARI
+          <span className="full-name">By BADHRI HARI</span>
+          <span className="short-name">By B.H.</span>
         </Link>
       </h1>
       <h2>
@@ -36,11 +37,11 @@ export default function Aside() {
       </h2>
       <h2>
         <Link
-          href="/guestbook"
+          href="/chat"
           className="aside-links"
-          aria-label="Go to the guest book page to add a public comment to my site!"
+          aria-label="Go to the live chat page to chat with others on my site!"
         >
-          Guestbook
+          Live Chat
         </Link>
       </h2>
       <h2>

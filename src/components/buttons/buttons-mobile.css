@@ -29,7 +29,7 @@
       max-height: 49vh;
       overflow-y: auto;
       padding: 10px;
-      border: 1px solid #FF4F00;
+      background-color: #232323;
     }
 }
 
@@ -72,7 +72,7 @@
     }
   }
 
-  @media (max-width: 365px) {
+  @media (max-width: 330px) {
     .left-column {
       display: none;
     }

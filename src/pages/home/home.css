@@ -88,6 +88,46 @@
   object-fit: contain;
 }
 
+.youtube-placeholder {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.youtube-placeholder img {
+  width: 100%;
+  display: block;
+}
+
+.youtube-placeholder div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  font-size: 1.1rem;
+  color: #fff;
+  text-shadow: 1px 1.5px 3px black;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px) saturate(1.5);
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+  border: 0.5px solid rgba(26, 26, 26, 0.5);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  transition: all 0.1s linear, border-radius 0.3s linear;
+}
+
+.youtube-placeholder div:hover {
+  transform: translate(-50%, -3%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px) saturate(0);
+  -webkit-backdrop-filter: blur(20px) saturate(0);
+  border: 1px solid rgba(255, 79, 0, 0.5);
+  border-radius: 18px;
+  padding: 0.6rem 1.1rem;
+}
+
 .website-link {
   font-size: 1.15rem;
   color: #ff4f00;
