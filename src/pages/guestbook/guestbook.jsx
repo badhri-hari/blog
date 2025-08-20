@@ -33,7 +33,7 @@ export default function Guestbook() {
         setVisitorCount(data.count_unique);
       } catch (e) {
         console.error("Error fetching GoatCounter visitor count:", e);
-        setError("no clue how many people visited my site tbh.");
+        setError("your adblock is doing a good job. unfortunately, that means you can't see the visitor count :(");
       }
     }
 
