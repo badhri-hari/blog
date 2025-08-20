@@ -115,6 +115,10 @@
           .no-js-warning h1::selection {
             color: #fff;
           }
+
+          .no-js-warning a:hover::selection {
+            color: #fff;
+          }
         }
 
         @media (max-width: 900px) {
@@ -156,29 +160,21 @@
         </p>
 
         <p>
-          <strong>Privacy details:</strong> IP address automatically collected
-          when visiting the site and is only used for tracking visitor count
-          and other details such as user agent, location, referrer etc. No data
-          will be sold to third parties nor will this data be used for any other
-          purpose. You may delete your data from the database after visiting the
-          site by
-          <a
-            href="MAILTO:badhrihari123@gmail.com"
-            target="_blank"
-            rel="noopener" 
-            >emailing me</a
-          >.
+          <strong>Privacy details:</strong> This site uses <a href="https://goatcounter.com" rel="noopener" target="_blank">GoatCounter</a> for web analytics; no unique identifiers and open-source.
         </p>
 
         <p><em>(create a <a 
            href="https://github.com/badhri-hari/blog/issues/new"
             target="_blank"
             rel="noopener"
-          >new issue</a> if you want to make me create a no-JS version of my site)</em></p>
+          >new issue</a> if you want me to create a no-JS version of this site)</em></p>
       </div>
     </noscript>
 
     <div id="root"></div>
     <script type="module" src="/src/app.jsx"></script>
+
+    <script data-goatcounter="https://badhri.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
   </body>
 </html>

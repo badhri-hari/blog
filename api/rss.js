@@ -88,6 +88,37 @@ export default async function handler(req, res) {
       const link = `https://badhri.pages.dev/post?id=${post.id}`;
       const commentLink = `https://badhri.pages.dev/comment?id=${post.id}`;
 
+      let mediaHtml = "";
+      let enclosures = "";
+
+      if (post.media && Array.isArray(post.media)) {
+        mediaHtml = post.media
+          .map((url) => {
+            if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+              return `<p><img src="${url}" alt="media" loading="lazy" /></p>`;
+            } else if (/youtube\.com|youtu\.be/.test(url)) {
+              return `<p><a href="${url}" target="_blank">YouTube Video</a></p>`;
+            } else {
+              return `<p><a href="${url}" target="_blank">${url}</a></p>`;
+            }
+          })
+          .join("");
+
+        enclosures = post.media
+          .filter((url) => /\.(jpg|jpeg|png|gif|webp|mp3|mp4)$/i.test(url))
+          .map(
+            (url) =>
+              `<enclosure url="${url}" type="${
+                url.endsWith(".mp3")
+                  ? "audio/mpeg"
+                  : url.endsWith(".mp4")
+                  ? "video/mp4"
+                  : "image/jpeg"
+              }" />`
+          )
+          .join("\n");
+      }
+
       return `
   <item>
     <title>${escapeXml(post.title)}</title>
@@ -96,8 +127,9 @@ export default async function handler(req, res) {
     <comments>${commentLink}</comments>
     <pubDate>${new Date(post.datetime).toUTCString()}</pubDate>
     <dc:creator><![CDATA[Badhri Hari]]></dc:creator>
-    <description><![CDATA[${htmlDescription}]]></description>
-    <content:encoded><![CDATA[${htmlDescription}]]></content:encoded>
+    <description><![CDATA[${htmlDescription}${mediaHtml}]]></description>
+    <content:encoded><![CDATA[${htmlDescription}${mediaHtml}]]></content:encoded>
+    ${enclosures}
   </item>`;
     })
     .join("");
