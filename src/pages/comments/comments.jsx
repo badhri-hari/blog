@@ -4,12 +4,29 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { supabase } from "../../../utils/supabase";
 import useCachedSupabase from "../../../hooks/useCachedSupabase";
 
-import "./comments.css"
+import "./comments.css";
 import "../home/home.css";
 import "../home/home-mobile.css";
 import "../home/blogText.css";
 import "../post/post.css";
 import "../guestbook/guestbook.css";
+
+function getSessionId() {
+  try {
+    let s = localStorage.getItem("anonSessionId");
+    if (!s) {
+      if (typeof crypto !== "undefined" && crypto.randomUUID) {
+        s = crypto.randomUUID();
+      } else {
+        s = "anon-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+      }
+      localStorage.setItem("anonSessionId", s);
+    }
+    return s;
+  } catch (e) {
+    return "temp-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+  }
+}
 
 export default function Comments() {
   const params = new URLSearchParams(window.location.search);
@@ -26,7 +43,8 @@ export default function Comments() {
   const [submitting, setSubmitting] = useState(false);
   const [likeCounts, setLikeCounts] = useState({});
   const [likedComments, setLikedComments] = useState(new Set());
-  const [userIP, setUserIP] = useState(null);
+
+  const sessionId = getSessionId();
 
   useEffect(() => {
     if (!postId) {
@@ -41,11 +59,8 @@ export default function Comments() {
       .eq("id", postId)
       .single()
       .then(({ data, error }) => {
-        if (error || !data) {
-          setError("Could not fetch the post title.");
-        } else {
-          setPostTitle(data.title);
-        }
+        if (error || !data) setError("Could not fetch the post title.");
+        else setPostTitle(data.title);
       })
       .catch(() => setError("Something went wrong."))
       .finally(() => setLoading(false));
@@ -61,7 +76,7 @@ export default function Comments() {
     fetcher: async () => {
       const { data, error } = await supabase
         .from("comments")
-        .select("id, name, comment, datetime, like_count, ip_address")
+        .select("id, name, comment, datetime, like_count, liked_sessions")
         .eq("post_id", postId)
         .order("datetime", { ascending: false })
         .limit(50);
@@ -73,13 +88,21 @@ export default function Comments() {
   useEffect(() => {
     if (!commentsLoading && Array.isArray(initialData)) {
       setComments(initialData);
-      const counts = initialData.reduce((acc, c) => {
-        acc[c.id] = c.like_count ?? 0;
-        return acc;
-      }, {});
+      const counts = {};
+      const likedSet = new Set();
+      initialData.forEach((c) => {
+        counts[c.id] = c.like_count ?? 0;
+        if (
+          Array.isArray(c.liked_sessions) &&
+          c.liked_sessions.includes(sessionId)
+        ) {
+          likedSet.add(c.id);
+        }
+      });
       setLikeCounts(counts);
+      setLikedComments(likedSet);
     }
-  }, [commentsLoading, initialData]);
+  }, [commentsLoading, initialData, sessionId]);
 
   useEffect(() => {
     try {
@@ -97,32 +120,9 @@ export default function Comments() {
     } catch {}
   }, []);
 
-  useEffect(() => {
-    async function getIP() {
-      try {
-        const cached = localStorage.getItem("userIP");
-        if (cached) {
-          setUserIP(cached);
-          return;
-        }
-
-        const res = await fetch("https://ipapi.co/json");
-        const geo = await res.json();
-        localStorage.setItem("userIP", geo.ip);
-        setUserIP(geo.ip);
-      } catch {
-        console.warn("Could not get IP.");
-      }
-    }
-
-    getIP();
-  }, []);
-
   async function recordComment(name, comment, email) {
     try {
       setSubmitting(true);
-      const res = await fetch("https://ipapi.co/json");
-      const geo = await res.json();
 
       const insertData = {
         post_id: postId,
@@ -130,11 +130,8 @@ export default function Comments() {
         email: email || null,
         comment,
         datetime: new Date().toISOString(),
-        ip_address: geo.ip,
-        country: geo.country_name,
-        city: geo.city,
-        user_agent: navigator.userAgent,
         like_count: 0,
+        liked_sessions: [],
       };
 
       const { error } = await supabase.from("comments").insert([insertData]);
@@ -146,11 +143,11 @@ export default function Comments() {
         setCommentInput("");
         const { data } = await supabase
           .from("comments")
-          .select("id, name, comment, datetime, like_count, ip_address")
+          .select("id, name, comment, datetime, like_count, liked_sessions")
           .eq("post_id", postId)
           .order("datetime", { ascending: false })
           .limit(50);
-        setComments(data);
+        if (Array.isArray(data)) setComments(data);
       }
     } catch (e) {
       console.error("Comment submission failed:", e);
@@ -159,25 +156,66 @@ export default function Comments() {
     }
   }
 
-  async function handleLike(id, authorIP) {
-    const isOwn = authorIP === userIP;
-    const isLiked = likedComments.has(id);
-    const count = likeCounts[id] || 0;
-    const newCount = isLiked ? count - 1 : count + 1;
+  async function handleLike(commentId) {
+    try {
+      const { data: rows, error: fetchErr } = await supabase
+        .from("comments")
+        .select("liked_sessions, like_count")
+        .eq("id", commentId)
+        .single();
 
-    const updated = new Set(likedComments);
-    if (isLiked) updated.delete(id);
-    else updated.add(id);
+      if (fetchErr || !rows) {
+        console.error("Could not fetch comment for toggling like:", fetchErr);
+        return;
+      }
 
-    setLikeCounts({ ...likeCounts, [id]: newCount });
-    setLikedComments(updated);
+      const currentSessions = Array.isArray(rows.liked_sessions)
+        ? rows.liked_sessions.slice()
+        : [];
+      const currentCount = rows.like_count || 0;
+      const hasLiked = currentSessions.includes(sessionId);
 
-    const { error } = await supabase
-      .from("comments")
-      .update({ like_count: newCount })
-      .eq("id", id);
+      let newSessions;
+      let newCount;
+      if (hasLiked) {
+        newSessions = currentSessions.filter((s) => s !== sessionId);
+        newCount = Math.max(0, currentCount - 1);
+      } else {
+        newSessions = currentSessions.concat([sessionId]);
+        newCount = currentCount + 1;
+      }
 
-    if (error) console.error("Error updating like_count:", error);
+      const { error: updateErr } = await supabase
+        .from("comments")
+        .update({
+          liked_sessions: newSessions,
+          like_count: newCount,
+        })
+        .eq("id", commentId);
+
+      if (updateErr) {
+        console.error("Could not update like:", updateErr);
+        return;
+      }
+
+      setLikeCounts((prev) => ({ ...prev, [commentId]: newCount }));
+      setLikedComments((prev) => {
+        const setCopy = new Set(prev);
+        if (hasLiked) setCopy.delete(commentId);
+        else setCopy.add(commentId);
+        return setCopy;
+      });
+
+      setComments((prev) =>
+        prev.map((c) =>
+          c.id === commentId
+            ? { ...c, liked_sessions: newSessions, like_count: newCount }
+            : c
+        )
+      );
+    } catch (e) {
+      console.error("Error toggling like:", e);
+    }
   }
 
   if (error)
@@ -260,7 +298,7 @@ export default function Comments() {
 
       {commentsLoading && <p style={{ fontSize: "1.12rem" }}>Loading...</p>}
 
-      {comments.map(({ id, name, comment, datetime, ip_address }) => (
+      {comments.map(({ id, name, comment, datetime }) => (
         <div key={id}>
           <article>
             <header className="post-title">
@@ -281,17 +319,7 @@ export default function Comments() {
               <time
                 className="comment-date"
                 dateTime={datetime}
-                title={new Date(datetime).toLocaleString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                  hour12: true,
-                  timeZoneName: "short",
-                })}
+                title={new Date(datetime).toLocaleString()}
               >
                 {new Date(datetime).toLocaleDateString("en-US", {
                   weekday: "long",
@@ -303,7 +331,7 @@ export default function Comments() {
               <div className="like-container">
                 <button
                   className="like-button"
-                  onClick={() => handleLike(id, ip_address)}
+                  onClick={() => handleLike(id)}
                   title={
                     likedComments.has(id)
                       ? "Click to unlike"
