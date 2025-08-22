@@ -113,8 +113,8 @@ export default function Buttons() {
         }
         aria-label={
           disableAnimations
-            ? "Make the buttons bounce around"
-            : "Put the buttons in a static position"
+            ? "Make the buttons bounce around (not recommended for accessbility purposes)"
+            : "Put the buttons in a static position (recommended for accessbility purposes)"
         }
       >
         {disableAnimations ? "Enable Animations" : "Disable Animations"}

@@ -10,4 +10,13 @@
   .socials {
     gap: 36px;
   }
+
+  .site-button-mobile {
+    display: block;
+    margin: -20px auto 15px auto;
+  }
+
+  .site-button {
+    display: none;
+  }
 }

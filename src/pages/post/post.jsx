@@ -146,14 +146,13 @@ export default function Post() {
               </button>
             </p>
             <p>
-              <button
-                onClick={() => {
-                  window.location.href = `/comments?id=${current.id}`;
-                }}
-                style={{ marginTop: "5px", color: "#ff4f00" }}
+              <a
+                href={`/comments?id=${current.id}`}
+                title={`Comments for "${current.title}"`}
+                style={{ textDecoration: "none", marginTop: "5px", color: "#ff4f00" }}
               >
                 Open comments page
-              </button>
+              </a>
             </p>
           </div>
 

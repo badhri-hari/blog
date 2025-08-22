@@ -112,20 +112,18 @@
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px) saturate(1.5);
   -webkit-backdrop-filter: blur(10px) saturate(1.5);
-  border: 0.5px solid rgba(26, 26, 26, 0.5);
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  transition: all 0.1s linear, border-radius 0.3s linear;
+  border: 2px solid rgba(26, 26, 26, 0.25);
+  border-radius: 0.75em;
+  padding: 0.25rem 1rem;
+  transition: all 0.1s linear;
 }
 
 .youtube-placeholder div:hover {
-  transform: translate(-50%, -3%);
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(20px) saturate(0);
   -webkit-backdrop-filter: blur(20px) saturate(0);
-  border: 1px solid rgba(255, 79, 0, 0.5);
-  border-radius: 18px;
-  padding: 0.6rem 1.1rem;
+  border: 2px solid rgba(255, 79, 0, 0.75);
+  border-radius: 0.5em;
 }
 
 .website-link {

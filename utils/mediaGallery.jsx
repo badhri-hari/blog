@@ -28,10 +28,10 @@ function YouTubeEmbed({ videoId, i }) {
       <img
         src={thumbnail}
         alt={`YouTube video ${i + 1}`}
-        title={`Video ID: ${videoId}`}
+        title={`YouTube Video ID: ${videoId}`}
         loading="lazy"
       />
-      <div title={`Video ID: ${videoId}`}>
+      <div title={`YouTube Video ID: ${videoId}`}>
         ▶ <span>Play YouTube Video</span>
       </div>
     </div>

@@ -23,13 +23,23 @@ export default function Chat() {
   // const [likedComments, setLikedComments] = useState(new Set());
 
   useEffect(() => {
-    if (window.chattable) {
-      window.chattable.initialize({
-        stylesheet: "/chattable.css",
-      });
-    } else {
-      console.error("chattable not loaded yet");
-    }
+    const script = document.createElement("script");
+    script.src = "https://iframe.chat/scripts/main.min.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.chattable) {
+        window.chattable.initialize({
+          stylesheet: "/chattable.css",
+        });
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+      const iframe = document.getElementById("chattable");
+      if (iframe) iframe.remove();
+    };
   }, []);
 
   useEffect(() => {

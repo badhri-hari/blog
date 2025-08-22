@@ -11,12 +11,6 @@ export const buttonImages = [
     label: "Animated GIF of Pikachu running",
   },
   {
-    src: "badhri_site.gif",
-    href: "https://badhri.pages.dev",
-    label:
-      "A 88 x 31 button I (the website owner) made for my site! (it's not very creative though)",
-  },
-  {
     src: "trump_mugshot.png",
     href: "https://pbs.org/wgbh/frontline/article/a-guide-to-the-criminal-cases-against-donald-trump",
     label:

@@ -1,5 +1,6 @@
 import { render } from "preact";
 import { Router } from "preact-router";
+import { useEffect } from "preact/hooks";
 
 import Header from "./components/header/header";
 import Aside from "./components/aside/aside";
@@ -36,6 +37,23 @@ function App() {
       });
     }
   }
+
+  useEffect(() => {
+    function setRandomBackground() {
+      const url = `https://picsum.photos/1920/1080?random`;
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        document.documentElement.style.setProperty("--bg-image", `url(${url})`);
+      };
+    }
+
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(setRandomBackground);
+    } else {
+      setTimeout(setRandomBackground, 1500);
+    }
+  }, []);
 
   return (
     <>

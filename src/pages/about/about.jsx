@@ -1,5 +1,3 @@
-import { useState } from "preact/hooks";
-
 import { FaLinkedin } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
 import { FaRedditAlien, FaRss, FaCheck } from "react-icons/fa";
@@ -17,22 +15,40 @@ export default function About() {
           I don't think I could articulate my ideals more accurately than{" "}
           <a href="https://andymasley.com/blog" target="_blank" rel="noopener">
             Andy Masley
-          </a> has done:
-          <ol style={{fontSize: "inherit"}}>
-            <li style={{fontSize: "inherit"}}>Value pluralism: There are multiple ways of achieving the good life, and people have a bad but natural tendency to try to impose a narrow idea of the good life on others.</li>
-            <li style={{fontSize: "inherit"}}>Small-L-liberalism: Finding ways to mediate and prevent violence between people with radically different conceptions of the good life to allow for maximum freedom.</li>
-            <li style={{fontSize: "inherit"}}>Reducing extreme suffering: In some ways this goes against the first two, but a consistent societal focus on reducing extreme suffering much more than we currently do.</li>
-            <li style={{fontSize: "inherit"}}>Valuing non-human animals: Almost all conscious beings in the world are non-human animals. Animal welfare philosophy has been much more marginalized than it ought to be.</li>
+          </a>{" "}
+          has done:
+          <ol style={{ fontSize: "inherit" }}>
+            <li style={{ fontSize: "inherit" }}>
+              Value pluralism: There are multiple ways of achieving the good
+              life, and people have a bad but natural tendency to try to impose
+              a narrow idea of the good life on others.
+            </li>
+            <li style={{ fontSize: "inherit" }}>
+              Small-L-liberalism: Finding ways to mediate and prevent violence
+              between people with radically different conceptions of the good
+              life to allow for maximum freedom.
+            </li>
+            <li style={{ fontSize: "inherit" }}>
+              Reducing extreme suffering: In some ways this goes against the
+              first two, but a consistent societal focus on reducing extreme
+              suffering much more than we currently do.
+            </li>
+            <li style={{ fontSize: "inherit" }}>
+              Valuing non-human animals: Almost all conscious beings in the
+              world are non-human animals. Animal welfare philosophy has been
+              much more marginalized than it ought to be.
+            </li>
           </ol>
         </p>
 
         <p>
-          Less suffering, more well-being <em style={{fontSize: "inherit"}}>(generally)</em>.
+          Less suffering, more well-being{" "}
+          <em style={{ fontSize: "inherit" }}>(generally)</em>.
         </p>
 
         <p>
-          I write about random topics, mainly politics, the economy,
-          urbanism, and technology.
+          I write about random topics, mainly politics, the economy, urbanism,
+          and technology.
         </p>
       </div>
 
@@ -80,7 +96,25 @@ export default function About() {
         >
           <FaRss className="socials-icons" />
         </a>
+
+        <img
+          src="/buttons/badhri_site.gif"
+          title="88x31 button for my site; no hotlinking!"
+          aria-label="A 88 x 31 button I (the website owner) made for my site!"
+          className="site-button"
+          style={{ width: "88px", height: "31px" }}
+          loading="eager"
+        />
       </div>
+
+      <img
+        src="/buttons/badhri_site.gif"
+        title="88x31 button for my site; no hotlinking!"
+        aria-label="A 88 x 31 button I (the website owner) made for my site!"
+        className="site-button-mobile"
+        style={{ width: "88px", height: "31px" }}
+        loading="eager"
+      />
     </main>
   );
 }
