@@ -54,7 +54,7 @@ export default function Chat() {
       } catch (e) {
         console.error("Error fetching GoatCounter visitor count:", e);
         setError(
-          "nice adblock you got there, just for that you get to see my analytics page: badhri.goatcounter.com"
+          "adblocker enabled? you'll have to go here to see the page analytics: badhri.goatcounter.com"
         );
       }
     }

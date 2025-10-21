@@ -66,6 +66,7 @@ a:hover {
   border-bottom: none;
   position: relative;
   color: #ff4f00;
+  opacity: 0.9;
 }
 
 a:hover::after {

@@ -170,7 +170,7 @@ export default function Home() {
           </div>
         </article>
       )}
-      {posts.map((post, index) => {
+      {/* {posts.map((post, index) => {
         const dateOnly = getLocalDateOnly(post.datetime);
         const isLastPostOfDate = lastPostByDate.get(dateOnly) === index;
         const isLastPost = index === posts.length - 1;
@@ -256,14 +256,25 @@ export default function Home() {
             </div>
           </article>
         );
-      })}
-      {loading && (
+      })} */}
+      <article>
+        <header className="post-title">
+          <h2>hiatus</h2>
+        </header>
+
+        <div className="post-content">
+          <p>/hʌɪˈeɪtəs/</p>
+          <p>noun: a pause or break in continuity in a sequence or activity.</p>
+          <p>college life turns out to have been a lot busier than I thought it'd be</p>
+        </div>
+      </article>
+      {/* {loading && (
         <article>
           <div className="post-content">
             <p style={{ fontSize: "1.12rem" }}>Loading...</p>
           </div>
         </article>
-      )}
+      )} */}
     </main>
   );
 }

@@ -38,22 +38,22 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    function setRandomBackground() {
-      const url = `https://picsum.photos/1920/1080?random`;
-      const img = new Image();
-      img.src = url;
-      img.onload = () => {
-        document.documentElement.style.setProperty("--bg-image", `url(${url})`);
-      };
-    }
+  // useEffect(() => {
+  //   function setRandomBackground() {
+  //     const url = `https://picsum.photos/1920/1080?random`;
+  //     const img = new Image();
+  //     img.src = url;
+  //     img.onload = () => {
+  //       document.documentElement.style.setProperty("--bg-image", `url(${url})`);
+  //     };
+  //   }
 
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(setRandomBackground);
-    } else {
-      setTimeout(setRandomBackground, 1500);
-    }
-  }, []);
+  //   if ("requestIdleCallback" in window) {
+  //     requestIdleCallback(setRandomBackground);
+  //   } else {
+  //     setTimeout(setRandomBackground, 1500);
+  //   }
+  // }, []);
 
   return (
     <>

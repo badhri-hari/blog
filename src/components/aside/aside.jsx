@@ -46,6 +46,19 @@ export default function Aside() {
       </h2>
       <h2>
         <Link
+          href="/"
+          className="aside-links"
+          aria-label="Go to the Wikis page"
+          style={{
+            pointerEvents: "none",
+            opacity: "0.6",
+          }}
+        >
+          Wikis
+        </Link>
+      </h2>
+      <h2>
+        <Link
           href="/search"
           className="aside-links"
           aria-label="Go to the Search page"

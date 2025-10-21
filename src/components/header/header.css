@@ -17,6 +17,11 @@
   background: transparent;
 }
 
+.horizontal-text::selection, .letter-b::selection , .vertical-text::selection {
+  color: inherit;
+  background: transparent;
+}
+
 .horizontal-text {
   font-size: 3.1rem;
   margin: 0;
